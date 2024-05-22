@@ -4,6 +4,8 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     [SerializeField]
+    private string name;
+    [SerializeField]
     private int score;
     [SerializeField]
     private AudioClip eatSound;
@@ -32,13 +34,17 @@ public class Food : MonoBehaviour
             audioSource.PlayOneShot(eatSound);
             StartCoroutine(Shrink());
             GetComponent<BoxCollider2D>().enabled = false;
-            GameHandler.instance.SpawnFood();
+            //GameHandler.instance.SpawnFood();
+            //GameHandler.instance.AddHP(score / 5);
+            GameHandler.instance.EatFood(name, score);
         }
     }
 
 
     IEnumerator Shrink()
     {
+        GetComponentInChildren<Canvas>().enabled = false;//hide the food name
+
         Vector2 startSize = transform.localScale;
         Vector2 endSize = Vector2.zero;
         float timer = 0.5f;

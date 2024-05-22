@@ -116,5 +116,10 @@ public class Snake : MonoBehaviour
         }
     }
 
+    public int GetIndexOfBody(GameObject body)
+    {
+        return snakeBody.IndexOf(body);
+    }
+
 
 }
