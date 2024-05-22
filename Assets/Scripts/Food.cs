@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : MonoBehaviour
@@ -9,6 +8,8 @@ public class Food : MonoBehaviour
     [SerializeField]
     private AudioClip eatSound;
     private AudioSource audioSource;
+    [SerializeField]
+    private Sprite bodySprite;
 
 
     private void Awake()
@@ -19,16 +20,22 @@ public class Food : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("eat");
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
+            Snake player = collision.GetComponent<Snake>();
+            if (player == null)
+                return;
+
+            player.AddBodySize(bodySprite);
+
             //AudioSource.PlayClipAtPoint(eatSound, transform.position);
             audioSource.PlayOneShot(eatSound);
-            //Destroy(gameObject);
             StartCoroutine(Shrink());
             GetComponent<BoxCollider2D>().enabled = false;
             GameHandler.instance.SpawnFood();
         }
     }
+
 
     IEnumerator Shrink()
     {
@@ -38,7 +45,7 @@ public class Food : MonoBehaviour
         while (timer >= 0)
         {
             timer -= Time.deltaTime;
-            transform.localScale = Vector3.Lerp(endSize, startSize, timer/0.5f);
+            transform.localScale = Vector3.Lerp(endSize, startSize, timer / 0.5f);
             yield return null;
         }
         Destroy(gameObject);

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class GameHandler : MonoBehaviour
     public static GameHandler instance;
     //scene size
     [SerializeField]
-    private int width; 
+    private int width;
     [SerializeField]
     private int height;
     [SerializeField]
@@ -20,21 +19,25 @@ public class GameHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
-        SpawnFood();
+        for (int i = 0; i < 3; i++)
+        {//init 3 random foods when started
+            SpawnFood();
+        }
     }
 
     public void SpawnFood()
     {
         int foodIdx = Random.Range(0, foodPrefabs.Count);
-        
+
         Vector3Int randomPosition;
-        do{
+        do
+        {
             randomPosition = new Vector3Int(Random.Range(0, width), Random.Range(0, height), 0);
             //should not spawn on player's position
-        } while (randomPosition != player.transform.position);
-        
+        } while (randomPosition == player.transform.position);
+
 
         Instantiate(foodPrefabs[foodIdx], randomPosition, Quaternion.identity);
     }
-    
+
 }
