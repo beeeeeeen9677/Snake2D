@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DatabaseHandler : MonoBehaviour
@@ -27,6 +28,11 @@ public class DatabaseHandler : MonoBehaviour
     public void AddRecordToDB(string playerName, int score, string timeStr, int totalScore)
     {
         realmController.AddRecord(playerName, score, timeStr, totalScore);
+    }
+
+    public List<Snake2dRank> GetAllRecord()
+    {
+        return realmController.GetAllRecord();
     }
 
 }

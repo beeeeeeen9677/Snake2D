@@ -1,5 +1,7 @@
 using Realms;
 using Realms.Sync;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public class RealmController
@@ -74,8 +76,21 @@ public class RealmController
             UnityEngine.Debug.Log("Added");
 
         });
-
     }
+
+
+    public List<Snake2dRank> GetAllRecord()
+    {
+        if (realm == null)
+        {
+            UnityEngine.Debug.Log("realm not ready");
+            List<Snake2dRank> emptyList = new List<Snake2dRank>();
+            return emptyList;
+        }
+        return realm.All<Snake2dRank>().OrderByDescending(record => record.Total).ToList();
+    }
+
+
 
     public void Terminate()
     {

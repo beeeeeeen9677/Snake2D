@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private InputField inputField;
     private string playerName;
+    [SerializeField]
+    private Ranking rankingList;
+
     public void OnStartBtnPressed()
     {
         if (!ValiadateInput())
@@ -24,6 +27,20 @@ public class MainMenu : MonoBehaviour
             playerName = "Anonymous";
             return true;
         }
+        if (playerName.Length > 9)
+            playerName = playerName.Substring(0, 9);
+
         return true;
     }
+
+    public void OnRankingBtnPressed()
+    {   //toggle
+        rankingList.gameObject.SetActive(!rankingList.gameObject.activeInHierarchy);
+        if (rankingList.gameObject.activeInHierarchy)
+        {
+            //show ranking
+            rankingList.ShowRanking();
+        }
+    }
+
 }

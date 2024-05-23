@@ -18,6 +18,11 @@ public class Snake : MonoBehaviour
     [SerializeField]
     private List<Sprite> bodySpriteStack = new List<Sprite>();
 
+    [SerializeField]
+    private MoveButton leftBtn;
+    [SerializeField]
+    private MoveButton rightBtn;
+
 
 
 
@@ -86,8 +91,17 @@ public class Snake : MonoBehaviour
 
     private void GetPlayerInput()
     {
-
+        //handle keyboard
         inputDirection = Input.GetAxis("Horizontal");
+
+        //handle button on screen
+        if (leftBtn.isPressing)
+            inputDirection = -1;
+        if (rightBtn.isPressing)
+            inputDirection = +1;
+
+        if (leftBtn.isPressing && rightBtn.isPressing)
+            inputDirection = 0;
     }
 
 

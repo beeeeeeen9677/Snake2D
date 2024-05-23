@@ -32,11 +32,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Transform resultContentPanel;
 
+
     private void Awake()
     {
         instance = this;
         HPOriginalSize = HPMask.rectTransform.rect.width;
         UpdateScore(0);
+
     }
 
     public void SetHPValue(float value)
@@ -79,18 +81,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //Game Over
     public void ShowGameOverPanel(string msg, int totalScore, float seconds, List<CollectedFoodData> foodList)
     {
         gameOverPanel.SetActive(true);
         gameOverMsg.text = msg;
         resultPanel.SetResultTxt(totalScore, seconds);
         ShowResult(foodList);
+        transform.Find("ControlBtnPanel").gameObject.SetActive(false);
     }
 
     private void ShowResult(List<CollectedFoodData> foodList)//show all collected foods and its data after GameOver
     {
         RectTransform rt = resultContentPanel.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count + 1) * 100);
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count) * 100);
         foreach (CollectedFoodData foodData in foodList)
         {
             UIResultFoodData UIFoodData = Instantiate(UIResultFoodDataPrefab, resultContentPanel).GetComponent<UIResultFoodData>();
