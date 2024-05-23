@@ -15,6 +15,7 @@ public class Snake : MonoBehaviour
     [SerializeField]
     private GameObject bodyPrefab;
     private List<GameObject> snakeBody = new List<GameObject>();
+    [SerializeField]
     private List<Sprite> bodySpriteStack = new List<Sprite>();
 
 
@@ -27,9 +28,10 @@ public class Snake : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //inputDirection = Vector2Int.down;
         inputDirection = 0;
-        bodyLength = 1;
+        bodyLength = 3;
 
         snakeBody.Add(this.gameObject);//snake head
+        countUp = 0;
 
 
 

@@ -10,7 +10,7 @@ public class Boundary : MonoBehaviour
             if (player != null)
             {
                 //Debug.Log("Lose");
-                GameHandler.instance.EndGame("Boundary was touched by head");
+                GameHandler.instance.EndGame("You have touched the boundary");
             }
         }
     }

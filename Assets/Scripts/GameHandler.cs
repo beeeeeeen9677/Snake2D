@@ -30,6 +30,7 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Time.timeScale = 1f;
         instance = this;
         for (int i = 0; i < numOfInitFoods; i++)
         {//generate some random foods when started
@@ -70,7 +71,8 @@ public class GameHandler : MonoBehaviour
     public void EndGame(string message)
     {
         Debug.Log("Lose: " + message);
-
+        UIManager.instance.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
+        Time.timeScale = 0f;
     }
 
     public void AddHP(float amount)
@@ -86,7 +88,7 @@ public class GameHandler : MonoBehaviour
         totalScore += score;
         UIManager.instance.ShowEffectText(score);
         UIManager.instance.UpdateScore(totalScore);
-        CollectedFoodData foodData = new CollectedFoodData(name, timer);
+        CollectedFoodData foodData = new CollectedFoodData(name, timer, score);
         collectedFoodList.Add(foodData);
         UIManager.instance.UpdateCollectedList(foodData);
     }
@@ -96,11 +98,13 @@ public class CollectedFoodData
 {
     public string foodName;
     public string time;
+    public int score;
 
-    public CollectedFoodData(string foodName, float seconds)
+    public CollectedFoodData(string foodName, float seconds, int score)
     {
         this.foodName = foodName;
         TimeSpan time = TimeSpan.FromSeconds(seconds);
         this.time = time.ToString(@"mm\:ss");
+        this.score = score;
     }
 }

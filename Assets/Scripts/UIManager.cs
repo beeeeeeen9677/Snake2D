@@ -21,6 +21,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject foodDataPrefab;
     private List<GameObject> collectedFoodList = new List<GameObject>();
+    [SerializeField]
+    private GameObject gameOverPanel;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI gameOverMsg;
+    [SerializeField]
+    private ResultPanel resultPanel;
+    [SerializeField]
+    private GameObject UIResultFoodDataPrefab;
+    [SerializeField]
+    private Transform resultContentPanel;
 
     private void Awake()
     {
@@ -58,7 +68,7 @@ public class UIManager : MonoBehaviour
     {
         //show the first 5 newest collected foods
         GameObject newFoodData = Instantiate(foodDataPrefab, foodList);
-        newFoodData.GetComponent<TextMeshProUGUI>().text = foodData.time + ": " + foodData.foodName;
+        newFoodData.GetComponent<TextMeshProUGUI>().text = foodData.time + "   " + foodData.foodName;
         collectedFoodList.Add(newFoodData);
         //collectedFoodList.Add(foodData.time + ": " + foodData.foodName);
         if (collectedFoodList.Count > 5)
@@ -67,11 +77,24 @@ public class UIManager : MonoBehaviour
             collectedFoodList.RemoveAt(0);
             Destroy(removedObject);
         }
-        /*
-        foreach (string item in collectedFoodList)
-        {
+    }
 
+    public void ShowGameOverPanel(string msg, int totalScore, float seconds, List<CollectedFoodData> foodList)
+    {
+        gameOverPanel.SetActive(true);
+        gameOverMsg.text = msg;
+        resultPanel.SetResultTxt(totalScore, seconds);
+        ShowResult(foodList);
+    }
+
+    private void ShowResult(List<CollectedFoodData> foodList)//show all collected foods and its data after GameOver
+    {
+        RectTransform rt = resultContentPanel.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count + 1) * 100);
+        foreach (CollectedFoodData foodData in foodList)
+        {
+            UIResultFoodData UIFoodData = Instantiate(UIResultFoodDataPrefab, resultContentPanel).GetComponent<UIResultFoodData>();
+            UIFoodData.SetText(foodData.time, foodData.foodName, foodData.score);
         }
-        */
     }
 }
