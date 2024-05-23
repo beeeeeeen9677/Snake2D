@@ -79,18 +79,49 @@ public class RealmController
     }
 
 
-    public List<Snake2dRank> GetAllRecord()
+    public List<Snake2dRank> GetAllRecord()//order by totalscore
     {
         if (realm == null)
         {
-            UnityEngine.Debug.Log("realm not ready");
-            List<Snake2dRank> emptyList = new List<Snake2dRank>();
-            return emptyList;
+            return ReutrnEmptyList();
         }
         return realm.All<Snake2dRank>().OrderByDescending(record => record.Total).ToList();
     }
 
+    public List<Snake2dRank> GetAllRecordOrderByName()//order by totalscore
+    {
+        if (realm == null)
+        {
+            return ReutrnEmptyList();
+        }
+        return realm.All<Snake2dRank>().OrderBy(record => record.Name).ToList();
+    }
 
+    public List<Snake2dRank> GetAllRecordOrderByScore()//order by totalscore
+    {
+        if (realm == null)
+        {
+            return ReutrnEmptyList();
+        }
+        return realm.All<Snake2dRank>().OrderByDescending(record => record.Score).ToList();
+    }
+
+    public List<Snake2dRank> GetAllRecordOrderByTime()//order by totalscore
+    {
+        if (realm == null)
+        {
+            return ReutrnEmptyList();
+        }
+        return realm.All<Snake2dRank>().OrderByDescending(record => record.Time).ToList();
+    }
+
+
+    private static List<Snake2dRank> ReutrnEmptyList()
+    {
+        UnityEngine.Debug.Log("realm not ready");
+        List<Snake2dRank> emptyList = new List<Snake2dRank>();
+        return emptyList;
+    }
 
     public void Terminate()
     {

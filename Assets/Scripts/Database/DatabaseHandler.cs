@@ -34,5 +34,18 @@ public class DatabaseHandler : MonoBehaviour
     {
         return realmController.GetAllRecord();
     }
+    public List<Snake2dRank> GetAllRecordOrderByName()
+    {
+        return realmController.GetAllRecordOrderByName();
+    }
+
+    public List<Snake2dRank> GetAllRecordOrderByScore()
+    {
+        return realmController.GetAllRecordOrderByScore();
+    }
+    public List<Snake2dRank> GetAllRecordOrderByTime()
+    {
+        return realmController.GetAllRecordOrderByTime();
+    }
 
 }

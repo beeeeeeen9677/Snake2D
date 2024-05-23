@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 3604675919261614053}
   - component: {fileID: 1389421110844445497}
   - component: {fileID: 4137249389688322560}
+  - component: {fileID: 1924430517475687788}
   m_Layer: 5
   m_Name: RankingData
   m_TagString: Untagged
@@ -372,6 +373,22 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &1924430517475687788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2681557783674942320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0753895c89f76f140a3192312219a261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 6084160221489884854}
+  score: {fileID: 5632810730439242458}
+  time: {fileID: 6873430564358784609}
+  totalScore: {fileID: 5403815446990077939}
 --- !u!1 &3893247174032982643
 GameObject:
   m_ObjectHideFlags: 0

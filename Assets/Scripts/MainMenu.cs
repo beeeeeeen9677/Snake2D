@@ -27,8 +27,8 @@ public class MainMenu : MonoBehaviour
             playerName = "Anonymous";
             return true;
         }
-        if (playerName.Length > 9)
-            playerName = playerName.Substring(0, 9);
+        if (playerName.Length > 8)
+            playerName = playerName.Substring(0, 8);
 
         return true;
     }
