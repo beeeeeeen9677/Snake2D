@@ -21,10 +21,12 @@ public class GameHandler : MonoBehaviour
     public float HP { get; private set; }
     private float MaxHP = 40;
     private float timer = 0;
-    private int totalScore = 0;
+    private int totalScore = 0;//food score
+
+    private bool gameover = false;
+
 
     public List<CollectedFoodData> collectedFoodList { get; private set; } = new List<CollectedFoodData>();
-
 
 
     // Start is called before the first frame update
@@ -39,6 +41,8 @@ public class GameHandler : MonoBehaviour
 
         HP = MaxHP;
         //UIManager.instance.UpdateScore(totalScore);
+
+        gameover = false;
     }
 
     private void FixedUpdate()
@@ -70,7 +74,13 @@ public class GameHandler : MonoBehaviour
 
     public void EndGame(string message)
     {
+        if (gameover)
+            return;
+
+        gameover = true;
+
         Debug.Log("Lose: " + message);
+        AddRecordToDB(totalScore, timer);
         UIManager.instance.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
         Time.timeScale = 0f;
     }
@@ -91,6 +101,18 @@ public class GameHandler : MonoBehaviour
         CollectedFoodData foodData = new CollectedFoodData(name, timer, score);
         collectedFoodList.Add(foodData);
         UIManager.instance.UpdateCollectedList(foodData);
+    }
+
+
+    public void AddRecordToDB(int score, float seconds)
+    {
+        string playerName = PlayerPrefs.GetString("PlayerName");
+        TimeSpan time = TimeSpan.FromSeconds(seconds);
+        string timeStr = time.ToString(@"mm\:ss");
+        int totalScore = ((int)timer + score);
+
+        //realmController.AddRecord(playerName, score, timeStr, totalScore);
+        DatabaseHandler.DB_instance.AddRecordToDB(playerName, score, timeStr, totalScore);
     }
 }
 
