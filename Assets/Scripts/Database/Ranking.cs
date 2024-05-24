@@ -8,17 +8,28 @@ public class Ranking : MonoBehaviour
     private GameObject rankingDataPrefab;
     [SerializeField]
     private Transform rankingListPanel;
+
+    [SerializeField]
+    private GameObject[] labelBtnList;
+
+
     public void ShowRanking()//order by total score
     {
-        List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecord();
+        //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecord();
+        //ListAllRecords(records);
+        ClearShowingList();
+        IntantiateMessage("Loading records...");
 
-        ListAllRecords(records);
+
+        DatabaseHandler.DB_instance.GetAllRecords("TotalScore");
+        ShowBaseImage(3);
     }
+
 
     private void ListAllRecords(List<Snake2dRank> records)
     {
         ClearShowingList();
-        Debug.Log(records.Count);
+        //Debug.Log(records.Count);
 
         RectTransform rt = rankingListPanel.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, (records.Count) * 100);
@@ -27,16 +38,7 @@ public class Ranking : MonoBehaviour
         if (records.Count == 0)
         {
             Debug.Log("No record exists or DB not connected");
-
-            GameObject message = new GameObject("message", typeof(TextMeshProUGUI));
-            TextMeshProUGUI msg = message.GetComponent<TextMeshProUGUI>();
-            msg.text = "No record exists or connecting to DB\nPlease try to refresh later";
-            msg.alignment = TextAlignmentOptions.Center;
-            msg.color = Color.black;
-            msg.fontSize = 38;
-            message.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 200);
-            Instantiate(message, rankingListPanel);
-
+            IntantiateMessage("No record exists or connecting to DB\nPlease try to refresh later");
 
             return;
         }
@@ -48,6 +50,18 @@ public class Ranking : MonoBehaviour
         }
     }
 
+    private void IntantiateMessage(string textMsg)
+    {
+        GameObject message = new GameObject("message", typeof(TextMeshProUGUI));
+        TextMeshProUGUI msg = message.GetComponent<TextMeshProUGUI>();
+        msg.text = textMsg;
+        msg.alignment = TextAlignmentOptions.Center;
+        msg.color = Color.black;
+        msg.fontSize = 38;
+        message.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 200);
+        Instantiate(message, rankingListPanel);
+    }
+
     public void ClearShowingList()
     {
         foreach (Transform record in rankingListPanel)
@@ -57,23 +71,49 @@ public class Ranking : MonoBehaviour
     }
 
 
+
     public void ShowRankingOrderByName()
     {
-        List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByName();
-
-        ListAllRecords(records);
+        //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByName();
+        //ListAllRecords(records);
+        DatabaseHandler.DB_instance.GetAllRecords("Name");
+        ShowBaseImage(0);
     }
 
     public void ShowRankingOrderByScore()
     {
-        List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByScore();
-
-        ListAllRecords(records);
+        //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByScore();
+        //ListAllRecords(records);
+        DatabaseHandler.DB_instance.GetAllRecords("Score");
+        ShowBaseImage(1);
     }
     public void ShowRankingOrderByTime()
     {
-        List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByTime();
-
-        ListAllRecords(records);
+        //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByTime();
+        //ListAllRecords(records);
+        DatabaseHandler.DB_instance.GetAllRecords("Time");
+        ShowBaseImage(2);
     }
+
+
+
+    private void OnEnable()
+    {
+        DatabaseHandler.DB_instance.OnDataLoaded += ListAllRecords;
+    }
+    private void OnDestroy()
+    {
+        DatabaseHandler.DB_instance.OnDataLoaded -= ListAllRecords;
+    }
+
+
+    private void ShowBaseImage(int idx)
+    {
+        foreach (GameObject btn in labelBtnList)
+        {   //reset
+            btn.SetActive(false);
+        }
+        labelBtnList[idx].SetActive(true);
+    }
+
 }

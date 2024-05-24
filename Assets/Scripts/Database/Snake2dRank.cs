@@ -1,30 +1,15 @@
-using MongoDB.Bson;
-using Realms;
-
-public partial class Snake2dRank : RealmObject
+public class Snake2dRank
 {
-    [MapTo("_id")]
-    [PrimaryKey]
-    public ObjectId Id { get; set; }
+    public string Name;
+    public int Score;
+    public string Time;
+    public int Total;
 
-    [MapTo("name")]
-    public string? Name { get; set; }
-
-    [MapTo("score")]
-    public double? Score { get; set; }
-
-    [MapTo("time")]
-    public string? Time { get; set; }
-
-    [MapTo("total")]
-    public double? Total { get; set; }
-
-
-    public Snake2dRank()
+    public Snake2dRank(string name, int score, string time, int totalScore)
     {
-        Id = ObjectId.GenerateNewId();
+        Name = name;
+        Score = score;
+        Time = time;
+        Total = totalScore;
     }
 }
-
-
-
