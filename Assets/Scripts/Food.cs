@@ -93,10 +93,10 @@ public class Food : MonoBehaviour
             case "正念":
                 categoryIdx = 0;
                 break;
-            case "说出你的情绪":
+            case "辨别并了解情绪":
                 categoryIdx = 1;
                 break;
-            case "检查事实 ":
+            case "核对事实":
                 categoryIdx = 2;
                 break;
             case "辩证思维":
@@ -111,9 +111,23 @@ public class Food : MonoBehaviour
             case "全然接纳":
                 categoryIdx = 6;
                 break;
-            case "问题解决":
+            case "解决问题":
                 categoryIdx = 7;
                 break;
+            case "立即停止":
+                categoryIdx = 8;
+                break;
+            case "自我抚慰":
+                categoryIdx = 9;
+                break;
+            case "智慧心":
+                categoryIdx = 10;
+                break;
+            case "建立自我掌控":
+                categoryIdx = 11;
+                break;
+
+
 
 
 
