@@ -70,7 +70,11 @@ public class UIManager : MonoBehaviour
     {
         //show the first 5 newest collected foods
         GameObject newFoodData = Instantiate(foodDataPrefab, foodList);
-        newFoodData.GetComponent<TextMeshProUGUI>().text = foodData.time + "   " + foodData.foodName;
+        string foodText = foodData.foodName.Substring(0, Math.Min(foodData.foodName.Length, 7));
+        if (foodData.foodName.Length > 6)
+            foodText += "...";
+
+        newFoodData.GetComponent<Text>().text = foodData.time + "   " + foodText;
         collectedFoodList.Add(newFoodData);
         //collectedFoodList.Add(foodData.time + ": " + foodData.foodName);
         if (collectedFoodList.Count > 5)

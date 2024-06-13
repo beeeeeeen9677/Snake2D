@@ -34,10 +34,12 @@ public class GameHandler : MonoBehaviour
     {
         Time.timeScale = 1f;
         instance = this;
+        /*
         for (int i = 0; i < numOfInitFoods; i++)
         {//generate some random foods when started
             SpawnFood();
         }
+        */
 
         HP = MaxHP;
         //UIManager.instance.UpdateScore(totalScore);

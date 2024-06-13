@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Food : MonoBehaviour
 {
     [SerializeField]
-    private string name;
+    private string text;
     [SerializeField]
     private int score;
     [SerializeField]
@@ -12,11 +14,34 @@ public class Food : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField]
     private Sprite bodySprite;
+    [SerializeField]
+    private Text ui_text;
 
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        //calculate the size of text
+        //min: 35    max: 70
+        //normalize    (n-2)/(5-2)   at most 5 char for 1 line
+        int textLength = text.Length;
+        textLength = Mathf.Clamp(textLength, 2, 5);
+
+        ui_text.fontSize = (int)(70 - 35 * ((textLength - 2) / 3));
+        //change line
+        StringBuilder builder = new StringBuilder();
+        int count = 0;
+        foreach (char c in text)
+        {
+            builder.Append(c);
+            if ((++count % 5) == 0)
+            {
+                builder.Append('\n');
+            }
+        }
+        ui_text.text = builder.ToString();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,10 +58,10 @@ public class Food : MonoBehaviour
             //AudioSource.PlayClipAtPoint(eatSound, transform.position);
             audioSource.PlayOneShot(eatSound);
             StartCoroutine(Shrink());
-            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
             //GameHandler.instance.SpawnFood();
             //GameHandler.instance.AddHP(score / 5);
-            GameHandler.instance.EatFood(name, score);
+            GameHandler.instance.EatFood(text, score);
         }
     }
 
