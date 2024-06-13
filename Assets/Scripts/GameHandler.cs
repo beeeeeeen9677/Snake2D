@@ -14,14 +14,16 @@ public class GameHandler : MonoBehaviour
     private GameObject player;
     [SerializeField]
     private GameObject foodPrefabs;
+
     [SerializeField]
+    private List<DBTSOList> scenarioList;
     private DBTSOList dbtsoList;
     [SerializeField]
     private int numOfInitFoods = 6;
 
     [field: SerializeField]
     public float HP { get; private set; }
-    private float MaxHP = 40;
+    private float MaxHP = 80;
     private float timer = 0;
     private int totalScore = 0;//food score
 
@@ -35,12 +37,25 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private UIManager uiManager;
 
+    [SerializeField]
+    private AudioClip gameoverClip;
 
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        var random = new System.Random((int)timestamp);
+        // Generate a random number between 0 and dbtListLength
+        int randomIdx = random.Next(0, scenarioList.Count);
+
+
+        dbtsoList = scenarioList[randomIdx];
+
+
+
         dbtListLength = dbtsoList.dbtList.Count;
 
         Time.timeScale = 1f;
@@ -77,10 +92,10 @@ public class GameHandler : MonoBehaviour
 
     public void SpawnFood(int seed = 0)
     {
-
+        long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         // Create a new instance of Random with the timestamp as the seed
-        var random = new System.Random((int)Time.deltaTime + seed);
+        var random = new System.Random((int)timestamp + seed);
 
         // Generate a random number between 0 and dbtListLength
         int randomIdx = random.Next(0, dbtListLength);
@@ -106,11 +121,17 @@ public class GameHandler : MonoBehaviour
             return;
 
         gameover = true;
+        Time.timeScale = 0f;
+        /*
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(gameoverClip);
+
+        Thread.Sleep(1000);
+        */
 
         Debug.Log("Lose: " + message);
         AddRecordToDB(totalScore, timer);
         uiManager.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
-        Time.timeScale = 0f;
     }
 
     public void AddHP(float amount)

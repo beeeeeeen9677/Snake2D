@@ -413,6 +413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bubble
       objectReference: {fileID: 0}
+    - target: {fileID: 8875011697553048546, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8875011697553048548, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -457,9 +461,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8875011697553048550, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
-      propertyPath: eatSound.Array.size
-      value: 2
+    - target: {fileID: 8875011697553048549, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
@@ -102789,10 +102793,15 @@ MonoBehaviour:
   height: 40
   player: {fileID: 1537961981}
   foodPrefabs: {fileID: 8875011697553048546, guid: 8abb62bac6694174c9c50fb7093540f5, type: 3}
-  dbtsoList: {fileID: 11400000, guid: 716b1364410331d4db681780144e881b, type: 2}
+  scenarioList:
+  - {fileID: 11400000, guid: 15ddebdda49352841a528b222833ccf0, type: 2}
+  - {fileID: 11400000, guid: 3c86da5dd233bed43a334abca5115f90, type: 2}
+  - {fileID: 11400000, guid: 5adf1fb4a0fd5374f8bfecb9968e19fd, type: 2}
+  - {fileID: 11400000, guid: 716b1364410331d4db681780144e881b, type: 2}
   numOfInitFoods: 15
   <HP>k__BackingField: 0
   uiManager: {fileID: 2125476782}
+  gameoverClip: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
 --- !u!4 &1417497796
 Transform:
   m_ObjectHideFlags: 0
@@ -102817,7 +102826,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 14e5eeede6fa54508bbd5dd21b147643, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.3
   m_Pitch: 1
@@ -104688,7 +104697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2710602371063879317, guid: 9ba018d075a19c349bc4559c288a4624, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2710602371063879319, guid: 9ba018d075a19c349bc4559c288a4624, type: 3}
       propertyPath: m_Name

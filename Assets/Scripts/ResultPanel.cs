@@ -22,7 +22,59 @@ public class ResultPanel : MonoBehaviour
         playerNameTxt.text += playerName;
         resultTxtScore.text += score;
         resultTxtTime.text += timeStr;
-        totalScoreTxt.text += ((int)timer + score);
+
+        string totalScore = ((int)timer + score).ToString();
+
+        totalScoreTxt.text += totalScore;
+
+        /*
+        int duration = totalScore >= 100 ? 2 : 1;
+
+        float lerp = 0;
+        int startingScore = 0;
+
+        while (lerp < 1)
+        {
+            lerp += Time.deltaTime / duration;
+            startingScore = (int)Mathf.Lerp(startingScore, totalScore, lerp);
+        }
+        */
+
+        //Debug.Log(totalScoreTxt.text.Length);
+
+        //totalScore = "987";
+        //StartCoroutine(StartShowingScenario(totalScore));
+
     }
 
+    /*
+    IEnumerator StartShowingScenario(string sText)
+    {
+        for (int i = 0; i < sText.Length; i++)
+        {
+            StartCoroutine(GenerateRandomNumber(sText[i], i + 5));
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    IEnumerator GenerateRandomNumber(char finalChar, int index)
+    {
+        totalScoreTxt.text += finalChar;
+        StringBuilder sb;
+        for (int j = 0; j < 5; j++)
+        {
+            sb = new StringBuilder(totalScoreTxt.text);
+            sb[index] = (char)UnityEngine.Random.Range(0, 10);
+            totalScoreTxt.text = sb.ToString();
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        sb = new StringBuilder(totalScoreTxt.text);
+        sb[index] = finalChar;
+        totalScoreTxt.text = sb.ToString();
+
+        Debug.Log("adasd");
+
+    }
+    */
 }

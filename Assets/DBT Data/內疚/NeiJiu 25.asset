@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685beed1deacd7247ac7279f7c67096e, type: 3}
+  m_Name: NeiJiu 25
+  m_EditorClassIdentifier: 
+  text: "\u8D23\u602A\u670B\u53CB\u628A\u8863\u670D\u7ED9\u81EA\u5DF1 "
+  category: "\u6709\u95EE\u9898"

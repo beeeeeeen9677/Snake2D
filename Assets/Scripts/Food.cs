@@ -23,6 +23,7 @@ public class Food : MonoBehaviour
     private Sprite[] bodySprites;
 
 
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -35,10 +36,10 @@ public class Food : MonoBehaviour
 
     private void InitFood()
     {
-        text = dbtData.text;
+        text = dbtData.text.Trim();
         //GetComponent<SpriteRenderer>().sprite = dbtData.bubbleSprite;
         //bodySprite = dbtData.bodySprite;
-        category = dbtData.category;
+        category = dbtData.category.Trim();
         ChangeBubbleSprite();
 
 
@@ -64,6 +65,23 @@ public class Food : MonoBehaviour
         }
         ui_text.text = builder.ToString();
 
+
+
+        if (category == "有问题")
+            StartCoroutine(CountDownDisappear());
+
+    }
+
+
+
+    IEnumerator CountDownDisappear()
+    {
+        yield return new WaitForSeconds(24);
+        Animator anim = GetComponent<Animator>();
+        anim.enabled = true; //flashing effect
+        yield return new WaitForSeconds(6);
+        Destroy(gameObject);
+        GameHandler.instance.SpawnFood();
     }
 
     private void ChangeBubbleSprite()

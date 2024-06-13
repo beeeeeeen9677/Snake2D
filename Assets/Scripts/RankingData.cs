@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RankingData : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI name;
+    private Text name;
     [SerializeField]
     private TextMeshProUGUI score;
     [SerializeField]
