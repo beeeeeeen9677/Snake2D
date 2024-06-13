@@ -1,34 +1,56 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Food : MonoBehaviour
 {
-    [SerializeField]
     private string text;
     [SerializeField]
     private int score;
     [SerializeField]
-    private AudioClip eatSound;
+    private AudioClip[] eatSound;
     private AudioSource audioSource;
-    [SerializeField]
     private Sprite bodySprite;
     [SerializeField]
     private Text ui_text;
+    private string category;
+    [SerializeField]
+    private DBTSO dbtData;
+    [SerializeField]
+    private Sprite[] bubbleSprites;
+    [SerializeField]
+    private Sprite[] bodySprites;
 
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        if (dbtData != null)
+            InitFood();
+    }
+
+
+
+
+    private void InitFood()
+    {
+        text = dbtData.text;
+        //GetComponent<SpriteRenderer>().sprite = dbtData.bubbleSprite;
+        //bodySprite = dbtData.bodySprite;
+        category = dbtData.category;
+        ChangeBubbleSprite();
+
+
+
 
         //calculate the size of text
-        //min: 35    max: 70
+        //min: 35    max: 60
         //normalize    (n-2)/(5-2)   at most 5 char for 1 line
         int textLength = text.Length;
         textLength = Mathf.Clamp(textLength, 2, 5);
 
-        ui_text.fontSize = (int)(70 - 35 * ((textLength - 2) / 3));
+        ui_text.fontSize = (int)(60 - 25 * ((textLength - 2) / 3));
         //change line
         StringBuilder builder = new StringBuilder();
         int count = 0;
@@ -44,6 +66,62 @@ public class Food : MonoBehaviour
 
     }
 
+    private void ChangeBubbleSprite()
+    {
+        int categoryIdx;
+
+        switch (category)
+        {
+            case "正念":
+                categoryIdx = 0;
+                break;
+            case "说出你的情绪":
+                categoryIdx = 1;
+                break;
+            case "检查事实 ":
+                categoryIdx = 2;
+                break;
+            case "辩证思维":
+                categoryIdx = 3;
+                break;
+            case "舒缓":
+                categoryIdx = 4;
+                break;
+            case "DEARMAN":
+                categoryIdx = 5;
+                break;
+            case "全然接纳":
+                categoryIdx = 6;
+                break;
+            case "问题解决":
+                categoryIdx = 7;
+                break;
+
+
+
+            case "有问题":
+                categoryIdx = -1;
+                break;
+            default:
+                categoryIdx = -1;
+                //Debug.Log("no such category");
+                break;
+        }
+
+        if (categoryIdx == -1)
+            RandomBubbleSprite();
+        else
+        {
+            bodySprite = bodySprites[categoryIdx];
+            GetComponent<SpriteRenderer>().sprite = bubbleSprites[categoryIdx];
+        }
+    }
+
+    private void RandomBubbleSprite()
+    {
+        GetComponent<SpriteRenderer>().sprite = bubbleSprites[UnityEngine.Random.Range(0, bubbleSprites.Length)];
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("eat");
@@ -53,21 +131,33 @@ public class Food : MonoBehaviour
             if (player == null)
                 return;
 
-            player.AddBodySize(bodySprite);
 
-            //AudioSource.PlayClipAtPoint(eatSound, transform.position);
-            audioSource.PlayOneShot(eatSound);
+            GetComponent<BoxCollider2D>().enabled = false;
+
+
+            if (category == "有问题")
+                audioSource.PlayOneShot(eatSound[1]);
+            else
+            {
+                player.AddBodySize(bodySprite);
+                audioSource.PlayOneShot(eatSound[0]);
+            }
+
+
+            GameHandler.instance.EatFood(text, score, category);
             StartCoroutine(Shrink());
-            GetComponent<CircleCollider2D>().enabled = false;
+
+
             //GameHandler.instance.SpawnFood();
             //GameHandler.instance.AddHP(score / 5);
-            GameHandler.instance.EatFood(text, score);
+            //GameHandler.instance.EatFood(text, score, category);
         }
     }
 
 
     IEnumerator Shrink()
     {
+        //GetComponent<BoxCollider2D>().enabled = false;
         GetComponentInChildren<Canvas>().enabled = false;//hide the food name
 
         Vector2 startSize = transform.localScale;
@@ -79,7 +169,15 @@ public class Food : MonoBehaviour
             transform.localScale = Vector3.Lerp(endSize, startSize, timer / 0.5f);
             yield return null;
         }
-        Destroy(gameObject);
+        if (gameObject != null)
+            Destroy(gameObject);
+    }
+
+
+    public void SetDBTData(DBTSO data)
+    {
+        dbtData = data;
+        InitFood();
     }
 
 }

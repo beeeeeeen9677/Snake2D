@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Snake : MonoBehaviour
@@ -135,6 +135,19 @@ public class Snake : MonoBehaviour
     public int GetIndexOfBody(GameObject body)
     {
         return snakeBody.IndexOf(body);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Body")
+        {
+
+            if (GetIndexOfBody(collision.gameObject) == 1)//first body always touching head
+                return;
+            //body is touched by head
+            GameHandler.instance.EndGame("身体被头部撞到了");
+
+        }
     }
 
 

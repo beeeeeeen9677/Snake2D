@@ -1,5 +1,7 @@
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image HPMask;
     float HPOriginalSize;
+    [SerializeField]
+    private Animator hpAnim;
     [SerializeField]
     private TMPro.TextMeshProUGUI timerText;
     [SerializeField]
@@ -24,13 +28,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverPanel;
     [SerializeField]
-    private TMPro.TextMeshProUGUI gameOverMsg;
+    private Text gameOverMsg;
     [SerializeField]
     private ResultPanel resultPanel;
     [SerializeField]
     private GameObject UIResultFoodDataPrefab;
     [SerializeField]
     private Transform resultContentPanel;
+    [SerializeField]
+    private Text scenario;
 
 
     private void Awake()
@@ -75,6 +81,12 @@ public class UIManager : MonoBehaviour
             foodText += "...";
 
         newFoodData.GetComponent<Text>().text = foodData.time + "   " + foodText;
+
+        if (foodData.category == "有问题")
+        {
+            newFoodData.GetComponent<Text>().color = Color.red;
+        }
+
         collectedFoodList.Add(newFoodData);
         //collectedFoodList.Add(foodData.time + ": " + foodData.foodName);
         if (collectedFoodList.Count > 5)
@@ -98,11 +110,50 @@ public class UIManager : MonoBehaviour
     private void ShowResult(List<CollectedFoodData> foodList)//show all collected foods and its data after GameOver
     {
         RectTransform rt = resultContentPanel.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count) * 100);
+        //Debug.Log(UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count) * UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
         foreach (CollectedFoodData foodData in foodList)
         {
             UIResultFoodData UIFoodData = Instantiate(UIResultFoodDataPrefab, resultContentPanel).GetComponent<UIResultFoodData>();
-            UIFoodData.SetText(foodData.time, foodData.foodName, foodData.score);
+            UIFoodData.SetText(foodData.time, foodData.foodName, foodData.category);
         }
+    }
+
+    public void ShowScenario(string sText)
+    {
+        scenario.text = "";
+        //scenario.text = sText;
+        StartCoroutine(StartShowingScenario(sText));
+    }
+
+    IEnumerator StartShowingScenario(string sText)
+    {
+        for (int i = 0; i < sText.Length; i++)
+        {
+            StartCoroutine(GenerateRandomChar(sText[i], i));
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    IEnumerator GenerateRandomChar(char finalChar, int index)
+    {
+        scenario.text += finalChar;
+        StringBuilder sb;
+        for (int j = 0; j < 5; j++)
+        {
+            sb = new StringBuilder(scenario.text);
+            sb[index] = Convert.ToChar(UnityEngine.Random.Range(0, 26) + 65);
+            scenario.text = sb.ToString();
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        sb = new StringBuilder(scenario.text);
+        sb[index] = finalChar;
+        scenario.text = sb.ToString();
+    }
+
+    public void DecreaseHPAnim(string triggerStr)
+    {
+        hpAnim.SetTrigger(triggerStr);
     }
 }

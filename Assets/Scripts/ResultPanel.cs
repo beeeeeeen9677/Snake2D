@@ -1,14 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField]
-    private TMPro.TextMeshProUGUI playerNameTxt;
+    private Text playerNameTxt;
     [SerializeField]
-    private TMPro.TextMeshProUGUI resultTxt;
+    private Text resultTxtScore;
     [SerializeField]
-    private TMPro.TextMeshProUGUI totalScoreTxt;
+    private Text resultTxtTime;
+    [SerializeField]
+    private Text totalScoreTxt;
 
     public void SetResultTxt(int score, float timer)
     {
@@ -16,9 +19,10 @@ public class ResultPanel : MonoBehaviour
         string timeStr = time.ToString(@"mm\:ss");
         string playerName = PlayerPrefs.GetString("PlayerName");
 
-        playerNameTxt.text = "Player: " + playerName;
-        resultTxt.text = "Score: " + score + "   Survived: " + timeStr;
-        totalScoreTxt.text = "Total Score: " + ((int)timer + score);
+        playerNameTxt.text += playerName;
+        resultTxtScore.text += score;
+        resultTxtTime.text += timeStr;
+        totalScoreTxt.text += ((int)timer + score);
     }
 
 }

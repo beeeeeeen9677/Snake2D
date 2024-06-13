@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8875011697553048549}
   - component: {fileID: 8875011697553048550}
   - component: {fileID: 1327406584}
-  - component: {fileID: 1791963811}
+  - component: {fileID: 428922221}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Food
@@ -98,11 +98,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427151e43ccb64e41871b52c9d2df7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "\u6211\u4EEC\u4E0D\u4E00\u8D77\u4E0A\u5B66\uFF0C\u540C\u65F6\u53EF\u4EE5\u7EE7\u7EED\u89C1\u9762"
-  score: 5
-  eatSound: {fileID: 8300000, guid: c5cb2ac29e89dbf43a9b644caaad45e6, type: 3}
-  bodySprite: {fileID: 21300000, guid: 7027050f4ffc6e1428be364bcd25d16d, type: 3}
+  score: 15
+  eatSound:
+  - {fileID: 8300000, guid: c5cb2ac29e89dbf43a9b644caaad45e6, type: 3}
+  - {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
   ui_text: {fileID: 6085367424449370182}
+  dbtData: {fileID: 11400000, guid: 8d98b6dd2abc7204984eb4655aab9b6b, type: 2}
+  bubbleSprites:
+  - {fileID: 21300000, guid: 3995627625e4d9d4386409a2bf99e8cc, type: 3}
+  - {fileID: 21300000, guid: c4797b928419e844aaef5d3f039aa7f3, type: 3}
+  - {fileID: 21300000, guid: 39cdb9ff05036254493f8b78679c69a0, type: 3}
+  - {fileID: 21300000, guid: cf35119f7b53e1c419bb1c7cb3af6dda, type: 3}
+  - {fileID: 21300000, guid: 1652f2efa5721a446892d51b273576dc, type: 3}
+  - {fileID: 21300000, guid: db1bb1484620e8e4d8afff9f6d5c6514, type: 3}
+  - {fileID: 21300000, guid: b60bdd9bec74acf4f8af4ed562d149ac, type: 3}
+  - {fileID: 21300000, guid: 16ae76088a3d7e147921f97b001083e6, type: 3}
+  bodySprites:
+  - {fileID: 21300000, guid: 7a0a8439fd0448b4f8c3a9aad971ff1a, type: 3}
+  - {fileID: 21300000, guid: 9e7c4f9b5500ba740995f1e395e057d1, type: 3}
+  - {fileID: 21300000, guid: ece164ab77eed6f499de3995c67565bd, type: 3}
+  - {fileID: 21300000, guid: 7027050f4ffc6e1428be364bcd25d16d, type: 3}
+  - {fileID: 21300000, guid: 9d640ab9b9809664191ae6fb93d3133b, type: 3}
+  - {fileID: 21300000, guid: 9d640ab9b9809664191ae6fb93d3133b, type: 3}
+  - {fileID: 21300000, guid: e8f04d708de6d1a4dba0cf2329f5a9f0, type: 3}
+  - {fileID: 21300000, guid: 7027050f4ffc6e1428be364bcd25d16d, type: 3}
 --- !u!82 &1327406584
 AudioSource:
   m_ObjectHideFlags: 0
@@ -199,8 +218,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!58 &1791963811
-CircleCollider2D:
+--- !u!61 &428922221
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,8 +232,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 1.28
+  m_Size: {x: 2.56, y: 2.56}
+  m_EdgeRadius: 0
 --- !u!1001 &1805828655910026065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -369,7 +398,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e9551949a9e0a104588cf5f950cc1763, type: 3}
-    m_FontSize: 70
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -380,4 +409,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u6211\u4EEC\u4E0D\u4E00\u8D77\u4E0A\u5B66\uFF0C\u540C\u65F6\u53EF\u4EE5\u7EE7\u7EED\u89C1\u9762"
+  m_Text: "\u6E2C\u8A66\u6E2C\u8A66"

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,9 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private GameObject player;
     [SerializeField]
-    private List<GameObject> foodPrefabs;
+    private GameObject foodPrefabs;
+    [SerializeField]
+    private DBTSOList dbtsoList;
     [SerializeField]
     private int numOfInitFoods = 6;
 
@@ -28,40 +30,62 @@ public class GameHandler : MonoBehaviour
 
     public List<CollectedFoodData> collectedFoodList { get; private set; } = new List<CollectedFoodData>();
 
+    private int dbtListLength;
+
+    [SerializeField]
+    private UIManager uiManager;
+
+
+
 
     // Start is called before the first frame update
     void Awake()
     {
+        dbtListLength = dbtsoList.dbtList.Count;
+
         Time.timeScale = 1f;
         instance = this;
-        /*
+
         for (int i = 0; i < numOfInitFoods; i++)
         {//generate some random foods when started
-            SpawnFood();
+            SpawnFood(i);
         }
-        */
+
 
         HP = MaxHP;
-        //UIManager.instance.UpdateScore(totalScore);
+        //uiManager.UpdateScore(totalScore);
 
         gameover = false;
+
+
+
+        uiManager.ShowScenario(dbtsoList.scenario);
     }
+
 
     private void FixedUpdate()
     {
         HP -= Time.fixedDeltaTime;
-        UIManager.instance.SetHPValue(HP / MaxHP);
+        uiManager.SetHPValue(HP / MaxHP);
         if (HP <= 0)
-            EndGame("Your snake is too hungry");
+            EndGame("你的贪食蛇肚子太饿了");
 
 
         timer += Time.fixedDeltaTime;
-        UIManager.instance.UpdateTimer(timer);
+        uiManager.UpdateTimer(timer);
     }
 
-    public void SpawnFood()
+    public void SpawnFood(int seed = 0)
     {
-        int foodIdx = UnityEngine.Random.Range(0, foodPrefabs.Count);
+
+
+        // Create a new instance of Random with the timestamp as the seed
+        var random = new System.Random((int)Time.deltaTime + seed);
+
+        // Generate a random number between 0 and dbtListLength
+        int randomIdx = random.Next(0, dbtListLength);
+
+        //int randomIdx = UnityEngine.Random.Range(0, dbtListLength);
 
         Vector3Int randomPosition;
         do
@@ -71,7 +95,9 @@ public class GameHandler : MonoBehaviour
         } while (randomPosition == player.transform.position);
 
 
-        Instantiate(foodPrefabs[foodIdx], randomPosition, Quaternion.identity);
+
+        Food food = Instantiate(foodPrefabs, randomPosition, Quaternion.identity).GetComponent<Food>();
+        food.SetDBTData(dbtsoList.dbtList[randomIdx]);
     }
 
     public void EndGame(string message)
@@ -83,7 +109,7 @@ public class GameHandler : MonoBehaviour
 
         Debug.Log("Lose: " + message);
         AddRecordToDB(totalScore, timer);
-        UIManager.instance.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
+        uiManager.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
         Time.timeScale = 0f;
     }
 
@@ -93,16 +119,26 @@ public class GameHandler : MonoBehaviour
         HP = Mathf.Clamp(HP, 0, MaxHP);
     }
 
-    public void EatFood(string name, int score)
+    public void EatFood(string name, int score, string category)
     {
         SpawnFood();
-        AddHP(score / 5);
-        totalScore += score;
-        UIManager.instance.ShowEffectText(score);
-        UIManager.instance.UpdateScore(totalScore);
-        CollectedFoodData foodData = new CollectedFoodData(name, timer, score);
+        if (category != "有问题")
+        {
+            AddHP(score / 5);
+            totalScore += score;
+            uiManager.ShowEffectText(score);
+            uiManager.DecreaseHPAnim("increase");
+        }
+        else
+        {
+            AddHP(-score / 5);
+            uiManager.DecreaseHPAnim("decrease");
+        }
+
+        uiManager.UpdateScore(totalScore);
+        CollectedFoodData foodData = new CollectedFoodData(name, timer, score, category);
         collectedFoodList.Add(foodData);
-        UIManager.instance.UpdateCollectedList(foodData);
+        uiManager.UpdateCollectedList(foodData);
     }
 
 
@@ -113,6 +149,11 @@ public class GameHandler : MonoBehaviour
         string timeStr = time.ToString(@"mm\:ss");
         int totalScore = ((int)timer + score);
 
+        if (DatabaseHandler.DB_instance == null)
+        {
+            Debug.Log("DB not collected");
+            return;
+        }
         //realmController.AddRecord(playerName, score, timeStr, totalScore);
         DatabaseHandler.DB_instance.AddRecordToDB(playerName, score, timeStr, totalScore);
     }
@@ -123,12 +164,14 @@ public class CollectedFoodData
     public string foodName;
     public string time;
     public int score;
+    public string category;
 
-    public CollectedFoodData(string foodName, float seconds, int score)
+    public CollectedFoodData(string foodName, float seconds, int score, string category)
     {
         this.foodName = foodName;
         TimeSpan time = TimeSpan.FromSeconds(seconds);
         this.time = time.ToString(@"mm\:ss");
         this.score = score;
+        this.category = category;
     }
 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685beed1deacd7247ac7279f7c67096e, type: 3}
+  m_Name: BeiShang 11
+  m_EditorClassIdentifier: 
+  text: "\u6211\u4EEC\u4E0D\u4E00\u8D77\u4E0A\u5B66\uFF0C\u540C\u65F6\u53EF\u4EE5\u7EE7\u7EED\u89C1\u9762"
+  bubbleSprite: {fileID: 21300000, guid: cf35119f7b53e1c419bb1c7cb3af6dda, type: 3}
+  bodySprite: {fileID: 21300000, guid: 7027050f4ffc6e1428be364bcd25d16d, type: 3}
+  category: "\u8FA9\u8BC1\u601D\u7EF4"

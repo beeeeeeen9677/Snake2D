@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIResultFoodData : MonoBehaviour
@@ -7,13 +7,17 @@ public class UIResultFoodData : MonoBehaviour
     [SerializeField]
     private Text nameTxt;
     [SerializeField]
-    private TMPro.TextMeshProUGUI scoreTxt;
+    private Text categoryTxt;
 
-    public void SetText(string time, string name, int score)
+    public void SetText(string time, string name, string category)
     {
         //timeTxt.text = time;
         nameTxt.text = time + "   " + name;
-        scoreTxt.text = score.ToString();
+        categoryTxt.text = category;
+        if (category == "有问题")
+        {
+            categoryTxt.color = Color.red;
+        }
     }
 
 }

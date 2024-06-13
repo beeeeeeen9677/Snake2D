@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Boundary : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class Boundary : MonoBehaviour
             if (player != null)
             {
                 //Debug.Log("Lose");
-                GameHandler.instance.EndGame("You have touched the boundary");
+                GameHandler.instance.EndGame("你撞到墙体了");
             }
         }
     }
