@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
     {
         RectTransform rt = resultContentPanel.GetComponent<RectTransform>();
         //Debug.Log(UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count) * UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count + 1) * UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
         foreach (CollectedFoodData foodData in foodList)
         {
             UIResultFoodData UIFoodData = Instantiate(UIResultFoodDataPrefab, resultContentPanel).GetComponent<UIResultFoodData>();
