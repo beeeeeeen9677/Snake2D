@@ -30,12 +30,21 @@ public class MainMenu : MonoBehaviour
         if (playerName.Length > 8)
             playerName = playerName.Substring(0, 8);
 
+
         string[] invalidChar = { "'", "\"", ";", ":", "|", "=", "[", "]", "?", "/", "@" };
         foreach (string c in invalidChar)
         {
             playerName = playerName.Replace(c, "");
         }
-
+        /*
+        foreach (char c in playerName)
+        {
+            if (!char.IsLetterOrDigit(c))
+            {
+                return false;
+            }
+        }
+        */
 
         return true;
     }
