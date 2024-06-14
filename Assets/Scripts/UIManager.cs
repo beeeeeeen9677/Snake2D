@@ -38,6 +38,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text scenario;
 
+    //briefing part
+    [SerializeField]
+    private Briefing briefing;
+
+
 
     private void Awake()
     {
@@ -121,6 +126,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowScenario(string mood, string sText)
     {
+        briefing.StartCountDown(mood, sText);
+
+
         scenario.text = mood + "\n";
         //scenario.text = sText;
         StartCoroutine(StartShowingScenario(sText));

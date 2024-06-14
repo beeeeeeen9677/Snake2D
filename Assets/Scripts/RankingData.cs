@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class RankingData : MonoBehaviour
 {
     [SerializeField]
-    private Text name;
+    private Text playerName;
     [SerializeField]
     private TextMeshProUGUI score;
     [SerializeField]
@@ -16,7 +16,7 @@ public class RankingData : MonoBehaviour
 
     public void SetData(string name, int score, string time, int totalScore)
     {
-        this.name.text = name;
+        this.playerName.text = name;
         this.score.text = score.ToString();
         this.time.text = time;
         this.totalScore.text = totalScore.ToString();

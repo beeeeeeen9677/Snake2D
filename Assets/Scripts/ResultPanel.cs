@@ -54,7 +54,7 @@ public class ResultPanel : MonoBehaviour
 
     IEnumerator StartShowingScenario(string sText)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < sText.Length; i++)
         {
             StartCoroutine(GenerateRandomNumber(sText[i], i + 5));
             yield return new WaitForSecondsRealtime(0.2f);

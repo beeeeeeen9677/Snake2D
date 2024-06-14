@@ -37,6 +37,9 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private UIManager uiManager;
 
+    [SerializeField]
+    private GameObject stonePrefab;
+
 
 
 
@@ -68,6 +71,9 @@ public class GameHandler : MonoBehaviour
         Time.timeScale = 1f;
         instance = this;
 
+
+        SpawnStone();
+
         for (int i = 0; i < numOfInitFoods; i++)
         {//generate some random foods when started
             SpawnFood(i);
@@ -97,6 +103,24 @@ public class GameHandler : MonoBehaviour
         uiManager.UpdateTimer(timer);
     }
 
+    public void SpawnStone()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            // Create a new instance of Random with the timestamp as the seed
+            var random = new System.Random((int)timestamp + i);
+
+            // Generate a random number between 0 and dbtListLength
+            int randomIdx = random.Next(0, dbtListLength);
+
+            Vector3Int randomPosition = GetRandomPosition();
+
+            Instantiate(stonePrefab, randomPosition, Quaternion.identity);
+        }
+    }
+
     public void SpawnFood(int seed = 0)
     {
         long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -106,9 +130,16 @@ public class GameHandler : MonoBehaviour
 
         // Generate a random number between 0 and dbtListLength
         int randomIdx = random.Next(0, dbtListLength);
-
         //int randomIdx = UnityEngine.Random.Range(0, dbtListLength);
 
+        Vector3Int randomPosition = GetRandomPosition();
+
+        Food food = Instantiate(foodPrefabs, randomPosition, Quaternion.identity).GetComponent<Food>();
+        food.SetDBTData(dbtsoList.dbtList[randomIdx]);
+    }
+
+    private Vector3Int GetRandomPosition()
+    {
         Vector3Int randomPosition;
         do
         {
@@ -117,8 +148,7 @@ public class GameHandler : MonoBehaviour
         } while (Vector3.Distance(randomPosition, player.transform.position) < 5);
         //while(randomPosition == player.transform.position)
 
-        Food food = Instantiate(foodPrefabs, randomPosition, Quaternion.identity).GetComponent<Food>();
-        food.SetDBTData(dbtsoList.dbtList[randomIdx]);
+        return randomPosition;
     }
 
     public void EndGame(string message)

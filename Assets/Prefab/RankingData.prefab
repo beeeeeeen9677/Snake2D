@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0753895c89f76f140a3192312219a261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 7857048389696186045}
+  playerName: {fileID: 7857048389696186045}
   score: {fileID: 5632810730439242458}
   time: {fileID: 6873430564358784609}
   totalScore: {fileID: 5403815446990077939}
