@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
         if (foodData.foodName.Length > 6)
             foodText += "...";
 
-        newFoodData.GetComponent<Text>().text = foodData.time + "   " + foodText;
+        newFoodData.GetComponent<Text>().text = foodData.time + "\t" + foodText;
 
         if (foodData.category == "有问题")
         {

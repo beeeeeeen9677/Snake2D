@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07450981, g: 0.63529414, b: 0, a: 1}
+  m_Color: {r: 0.11678839, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -203,9 +203,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: efbae564d442ca04ba188fb1bc65a567, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 100
+    m_MaxSize: 28
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -246,10 +246,10 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 635.0304, y: 0}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3795276161036097602
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -282,16 +282,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: efbae564d442ca04ba188fb1bc65a567, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 100
+    m_MaxSize: 28
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "00:00   \u6211\u4EEC\u4E0D\u4E00\u8D77\u4E0A\u5B66\uFF0C\u540C\u65F6\u53EF\u4EE5\u7EE7\u7EED\u89C1\u9762"
+  m_Text: "00:00\t\u6211\u4EEC\u4E0D\u4E00\u8D77\u4E0A\u5B66\uFF0C\u540C\u65F6\u53EF\u4EE5\u7EE7\u7EED\u89C1\u9762"
 --- !u!1 &3795276161205039435
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 80}
+  m_SizeDelta: {x: 750, y: 80}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &8017402228204761319
 MonoBehaviour:
@@ -345,3 +345,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTxt: {fileID: 7627479332032167793}
   categoryTxt: {fileID: 9209738558089562088}
+  redColor: {r: 1, g: 0.17254902, b: 0.09019608, a: 0}
