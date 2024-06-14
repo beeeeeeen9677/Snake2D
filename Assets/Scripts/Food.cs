@@ -46,12 +46,12 @@ public class Food : MonoBehaviour
 
 
         //calculate the size of text
-        //min: 35    max: 60
+        //min: 40    max: 65
         //normalize    (n-2)/(5-2)   at most 5 char for 1 line
         int textLength = text.Length;
         textLength = Mathf.Clamp(textLength, 2, 5);
 
-        ui_text.fontSize = (int)(60 - 25 * ((textLength - 2) / 3));
+        ui_text.fontSize = (int)(65 - 25 * ((textLength - 2) / 3));
         //change line
         StringBuilder builder = new StringBuilder();
         int count = 0;
@@ -76,10 +76,10 @@ public class Food : MonoBehaviour
 
     IEnumerator CountDownDisappear()
     {
-        yield return new WaitForSeconds(24);
+        yield return new WaitForSeconds(23);
         Animator anim = GetComponent<Animator>();
         anim.enabled = true; //flashing effect
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(7);
         Destroy(gameObject);
         GameHandler.instance.SpawnFood();
     }

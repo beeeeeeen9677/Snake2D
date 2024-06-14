@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f4f586bd1dbcf43baefcce341abb61, type: 3}
   m_Name: XiuKui 00 List
   m_EditorClassIdentifier: 
+  mood: "\u60C5\u7EEA\uFF1A\u7F9E\u6127"
   scenario: "\u573A\u666F\uFF1A\u805A\u4F1A\u65F6\u522B\u4EBA\u90FD\u7A7F\u4E86\u597D\u770B\u53C8\u6602\u8D35\u7684\u8863\u670D\uFF0C\u4F46\u662F\u81EA\u5DF1\u53EA\u7A7F\u4E86\u6821\u670D"
   dbtList:
   - {fileID: 11400000, guid: 21c36cd211ae9ba419d265a36ae41aac, type: 2}

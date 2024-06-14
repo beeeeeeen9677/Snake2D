@@ -119,9 +119,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowScenario(string sText)
+    public void ShowScenario(string mood, string sText)
     {
-        scenario.text = "";
+        scenario.text = mood + "\n";
         //scenario.text = sText;
         StartCoroutine(StartShowingScenario(sText));
     }
@@ -130,7 +130,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < sText.Length; i++)
         {
-            StartCoroutine(GenerateRandomChar(sText[i], i));
+            StartCoroutine(GenerateRandomChar(sText[i], i + 6));
             yield return new WaitForSeconds(0.05f);
         }
     }

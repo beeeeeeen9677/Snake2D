@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +27,9 @@ public class ResultPanel : MonoBehaviour
 
         string totalScore = ((int)timer + score).ToString();
 
-        totalScoreTxt.text += totalScore;
+        //totalScoreTxt.text += totalScore;
+        StartCoroutine(StartShowingScenario(totalScore));
+
 
         /*
         int duration = totalScore >= 100 ? 2 : 1;
@@ -47,34 +51,33 @@ public class ResultPanel : MonoBehaviour
 
     }
 
-    /*
+
     IEnumerator StartShowingScenario(string sText)
     {
-        for (int i = 0; i < sText.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
             StartCoroutine(GenerateRandomNumber(sText[i], i + 5));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSecondsRealtime(0.2f);
+
         }
     }
 
     IEnumerator GenerateRandomNumber(char finalChar, int index)
     {
+
         totalScoreTxt.text += finalChar;
         StringBuilder sb;
         for (int j = 0; j < 5; j++)
         {
             sb = new StringBuilder(totalScoreTxt.text);
-            sb[index] = (char)UnityEngine.Random.Range(0, 10);
+            sb[index] = Convert.ToChar(UnityEngine.Random.Range(48, 58));
             totalScoreTxt.text = sb.ToString();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
 
         sb = new StringBuilder(totalScoreTxt.text);
         sb[index] = finalChar;
         totalScoreTxt.text = sb.ToString();
-
-        Debug.Log("adasd");
-
     }
-    */
+
 }

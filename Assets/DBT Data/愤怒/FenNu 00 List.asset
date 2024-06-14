@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f4f586bd1dbcf43baefcce341abb61, type: 3}
   m_Name: FenNu 00 List
   m_EditorClassIdentifier: 
+  mood: "\u60C5\u7EEA\uFF1A\u6124\u6012"
   scenario: "\u573A\u666F\uFF1A\u9047\u5230\u540C\u5B66\u5C0FA\u5728\u4F60\u80CC\u540E\u6253\u5C0F\u62A5\u544A"
   dbtList:
   - {fileID: 11400000, guid: db8e2bfaad705c744ac0cf213cb2e43a, type: 2}

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685beed1deacd7247ac7279f7c67096e, type: 3}
+  m_Name: KuaiLe 08
+  m_EditorClassIdentifier: 
+  text: "\u8003\u597D\u4E86\u5E94\u8BE5\u5F00\u5FC3 "
+  category: "\u8FA8\u522B\u5E76\u4E86\u89E3\u60C5\u7EEA"

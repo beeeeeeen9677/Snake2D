@@ -37,22 +37,29 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private UIManager uiManager;
 
-    [SerializeField]
-    private AudioClip gameoverClip;
 
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        //choose scenario, random if not selected by player in main menu
+        int mood = PlayerPrefs.GetInt("Mood");
+        if (mood == 0)//default
+        {
+            long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            var random = new System.Random((int)timestamp);
+            // Generate a random number between 0 and dbtListLength
+            int randomIdx = random.Next(0, scenarioList.Count);
 
-        var random = new System.Random((int)timestamp);
-        // Generate a random number between 0 and dbtListLength
-        int randomIdx = random.Next(0, scenarioList.Count);
+            dbtsoList = scenarioList[randomIdx];
+        }
+        else
+        {
+            dbtsoList = scenarioList[mood - 1];
+        }
 
 
-        dbtsoList = scenarioList[randomIdx];
 
 
 
@@ -74,7 +81,7 @@ public class GameHandler : MonoBehaviour
 
 
 
-        uiManager.ShowScenario(dbtsoList.scenario);
+        uiManager.ShowScenario(dbtsoList.mood, dbtsoList.scenario);
     }
 
 
@@ -107,9 +114,8 @@ public class GameHandler : MonoBehaviour
         {
             randomPosition = new Vector3Int(UnityEngine.Random.Range(-width, width), UnityEngine.Random.Range(-height, height), 0);
             //should not spawn on player's position
-        } while (randomPosition == player.transform.position);
-
-
+        } while (Vector3.Distance(randomPosition, player.transform.position) < 5);
+        //while(randomPosition == player.transform.position)
 
         Food food = Instantiate(foodPrefabs, randomPosition, Quaternion.identity).GetComponent<Food>();
         food.SetDBTData(dbtsoList.dbtList[randomIdx]);
@@ -129,7 +135,7 @@ public class GameHandler : MonoBehaviour
         Thread.Sleep(1000);
         */
 
-        Debug.Log("Lose: " + message);
+        //Debug.Log("Lose: " + message);
         AddRecordToDB(totalScore, timer);
         uiManager.ShowGameOverPanel(message, totalScore, timer, collectedFoodList);
     }

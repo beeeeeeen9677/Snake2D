@@ -5,7 +5,7 @@ public class Snake : MonoBehaviour
 {
     [SerializeField]
     private float speed;
-    private float distanceBetween = 0.17f;
+    private float distanceBetween = 0.19f;
     private float countUp = 0;
     [SerializeField]
     private float rotateSpeed;
