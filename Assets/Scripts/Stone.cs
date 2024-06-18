@@ -15,13 +15,6 @@ public class Stone : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Food")
-        {
-            Destroy(collision.gameObject);
-            GameHandler.instance.SpawnFood();
-        }
-
-
         if (collision.gameObject.tag == "Player")
         {
             Snake player = collision.gameObject.GetComponent<Snake>();
@@ -32,5 +25,20 @@ public class Stone : MonoBehaviour
             }
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Food")
+        {
+            //Debug.Log("stone collides with food");
+            if (collision.gameObject != null)
+            {
+                Destroy(collision.gameObject);
+                GameHandler.instance.SpawnFood();
+            }
+        }
+    }
+
 
 }

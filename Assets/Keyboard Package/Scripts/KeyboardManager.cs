@@ -26,6 +26,9 @@ public class KeyboardManager : MonoBehaviour
 
     public void AddLetter(string letter)
     {
+        if (textBox.text.Length >= 8)
+            return;
+
         textBox.text = textBox.text + letter;
     }
 

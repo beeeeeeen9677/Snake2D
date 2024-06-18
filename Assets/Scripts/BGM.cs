@@ -12,8 +12,14 @@ public class BGM : MonoBehaviour
         else
         {
             if (instance != this)
+            {
                 Destroy(gameObject);
+                return;
+            }
         }
         DontDestroyOnLoad(gameObject);
+
+        int muted = PlayerPrefs.GetInt("Muted");
+        AudioListener.volume = muted == 0 ? 1 : 0;
     }
 }

@@ -22,7 +22,7 @@ public class Snake : MonoBehaviour
     private MoveButton leftBtn;
     [SerializeField]
     private MoveButton rightBtn;
-
+    private Transform cameraTarget;
 
 
 
@@ -30,6 +30,7 @@ public class Snake : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        transform.Find("Minimap Icon").gameObject.SetActive(true);
         rb = GetComponent<Rigidbody2D>();
         //inputDirection = Vector2Int.down;
         inputDirection = 0;
@@ -38,9 +39,14 @@ public class Snake : MonoBehaviour
         snakeBody.Add(this.gameObject);//snake head
         countUp = 0;
 
-
+        cameraTarget = transform.Find("CameraTarget");
 
         //InvokeRepeating("ChangeGridPosition", 0, gridMoveTimerMax);
+    }
+
+    private void Update()
+    {
+        cameraTarget.position = transform.position + Vector3.up * 4;
     }
 
     // Update is called once per frame

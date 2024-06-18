@@ -7,5 +7,5 @@ public class DBTSOList : ScriptableObject
 {
     public string mood;
     public string scenario;
-    public List<DBTSO> dbtList;
+    public List<DBTData> dbtList;
 }

@@ -16,7 +16,7 @@ public class Food : MonoBehaviour
     private Text ui_text;
     private string category;
     [SerializeField]
-    private DBTSO dbtData;
+    private DBTData dbtData;
     [SerializeField]
     private Sprite[] bubbleSprites;
     [SerializeField]
@@ -27,6 +27,7 @@ public class Food : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        transform.Find("Minimap Icon").gameObject.SetActive(true);
         if (dbtData != null)
             InitFood();
     }
@@ -74,12 +75,15 @@ public class Food : MonoBehaviour
 
 
 
-    IEnumerator CountDownDisappear()
+    IEnumerator CountDownDisappear()//destroy food after 30 - 40 seconds (for 有問題 food only)
     {
-        yield return new WaitForSeconds(23);
+        yield return new WaitForSeconds(30);
         Animator anim = GetComponent<Animator>();
         anim.enabled = true; //flashing effect
-        yield return new WaitForSeconds(7);
+        var random = new System.Random(text.Length + category.Length);
+        int randomIdx = random.Next(0, 10);
+        //Debug.Log(randomIdx);
+        yield return new WaitForSeconds(randomIdx);
         Destroy(gameObject);
         GameHandler.instance.SpawnFood();
     }
@@ -206,7 +210,7 @@ public class Food : MonoBehaviour
     }
 
 
-    public void SetDBTData(DBTSO data)
+    public void SetDBTData(DBTData data)
     {
         dbtData = data;
         InitFood();

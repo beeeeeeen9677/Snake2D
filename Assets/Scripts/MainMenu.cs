@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +10,21 @@ public class MainMenu : MonoBehaviour
     private string playerName;
     [SerializeField]
     private Ranking rankingList;
+    [SerializeField]
+    private Image muteBtn;
+    [SerializeField]
+    private Sprite[] muteBtnImg;
+    [SerializeField]
+    private GameObject[] langaugeBtn;
+
+    public Action<int> OnLanagueChanged;
+
+
+    private void Awake()
+    {
+        ChangeLangaugeBtnVisual();
+        muteBtn.sprite = muteBtnImg[PlayerPrefs.GetInt("Muted")];
+    }
 
     public void OnStartBtnPressed()
     {
@@ -59,4 +75,52 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void OnMuteBtnPressed()
+    {
+        int muted = PlayerPrefs.GetInt("Muted");
+        if (muted == 0) //not muted
+        {
+            //set to mute
+            muted = 1;
+            Mute();
+        }
+        else//muted
+        {
+            //set to  unmute
+            muted = 0;
+            Unmute();
+        }
+
+        PlayerPrefs.SetInt("Muted", muted);
+        muteBtn.sprite = muteBtnImg[muted];
+    }
+
+    private void Mute()
+    {
+        AudioListener.volume = 0;
+    }
+
+    private void Unmute()
+    {
+        AudioListener.volume = 1;
+    }
+
+    public void OnLangaugeBtnPressed(int index)//0: TradChi, 1: SimpChi, 2: ENG
+    {
+        PlayerPrefs.SetInt("Lanaguage", index);
+        ChangeLangaugeBtnVisual();
+    }
+
+    private void ChangeLangaugeBtnVisual()
+    {
+        int index = PlayerPrefs.GetInt("Lanaguage");
+
+        foreach (GameObject btn in langaugeBtn)
+        {
+            btn.GetComponent<Image>().enabled = false;
+        }
+        langaugeBtn[index].GetComponent<Image>().enabled = true;
+
+        OnLanagueChanged?.Invoke(index);
+    }
 }

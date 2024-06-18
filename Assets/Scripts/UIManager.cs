@@ -114,9 +114,13 @@ public class UIManager : MonoBehaviour
 
     private void ShowResult(List<CollectedFoodData> foodList)//show all collected foods and its data after GameOver
     {
+
         RectTransform rt = resultContentPanel.GetComponent<RectTransform>();
         //Debug.Log(UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count + 1) * UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (foodList.Count) * UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
+        //Debug.Log(UIResultFoodDataPrefab.GetComponent<RectTransform>().rect.height);
+
+
         foreach (CollectedFoodData foodData in foodList)
         {
             UIResultFoodData UIFoodData = Instantiate(UIResultFoodDataPrefab, resultContentPanel).GetComponent<UIResultFoodData>();
@@ -129,7 +133,7 @@ public class UIManager : MonoBehaviour
         briefing.StartCountDown(mood, sText);
 
 
-        scenario.text = mood + "\n";
+        scenario.text = "情绪：" + mood + "\n";
         //scenario.text = sText;
         StartCoroutine(StartShowingScenario(sText));
     }

@@ -32,7 +32,7 @@ public class Ranking : MonoBehaviour
         //Debug.Log(records.Count);
 
         RectTransform rt = rankingListPanel.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (records.Count) * 100);
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, (records.Count) * rankingDataPrefab.GetComponent<RectTransform>().rect.height);
 
 
         if (records.Count == 0)
@@ -107,7 +107,7 @@ public class Ranking : MonoBehaviour
     }
 
 
-    private void ShowBaseImage(int idx)
+    private void ShowBaseImage(int idx)//button feedback
     {
         foreach (GameObject btn in labelBtnList)
         {   //reset

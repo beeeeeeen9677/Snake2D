@@ -40,12 +40,19 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private GameObject stonePrefab;
 
+    private CSVReader csvReader;
+
 
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        csvReader = GetComponent<CSVReader>();
+        csvReader.GetTextData();
+
+
+
         //choose scenario, random if not selected by player in main menu
         int mood = PlayerPrefs.GetInt("Mood");
         if (mood == 0)//default
