@@ -151,7 +151,22 @@ public class Snake : MonoBehaviour
             if (GetIndexOfBody(collision.gameObject) == 1)//first body always touching head
                 return;
             //body is touched by head
-            GameHandler.instance.EndGame("身体被头部撞到了");
+            string msg;
+
+            switch (PlayerPrefs.GetInt("Language"))
+            {
+                case 0:
+                    msg = "身體被頭部撞到了";
+                    break;
+                case 1:
+                    msg = "身体被头部撞到了";
+                    break;
+                default:
+                    msg = "Your head have touched your body";
+                    break;
+            }
+
+            GameHandler.instance.EndGame(msg);
 
         }
     }

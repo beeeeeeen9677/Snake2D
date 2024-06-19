@@ -20,8 +20,22 @@ public class Stone : MonoBehaviour
             Snake player = collision.gameObject.GetComponent<Snake>();
             if (player != null)
             {
+                string msg;
+
+                switch (PlayerPrefs.GetInt("Language"))
+                {
+                    case 0:
+                        msg = "你撞到障礙物了";
+                        break;
+                    case 1:
+                        msg = "你撞到障碍物了";
+                        break;
+                    default:
+                        msg = "You have touched an obstacle";
+                        break;
+                }
                 //Debug.Log("Lose");
-                GameHandler.instance.EndGame("你撞到障碍物了");
+                GameHandler.instance.EndGame(msg);
             }
         }
     }

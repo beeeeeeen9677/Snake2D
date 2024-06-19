@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -87,7 +88,7 @@ public class UIManager : MonoBehaviour
 
         newFoodData.GetComponent<Text>().text = foodData.time + "\t" + foodText;
 
-        if (foodData.category == "有问题")
+        if (foodData.category == Food.categoryList.Last())
         {
             newFoodData.GetComponent<Text>().color = Color.red;
         }

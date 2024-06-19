@@ -2170,7 +2170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c84506b8cdaeaf45b8381cd6ac09b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csvFile: {fileID: 4900000, guid: be1e441807ce4d44b97a660f395ece81, type: 3}
+  mainmenuCsvFile: {fileID: 4900000, guid: be1e441807ce4d44b97a660f395ece81, type: 3}
+  scenarioCsvFile: {fileID: 4900000, guid: a324226d732c5c44584cc9ceb8ddf457, type: 3}
+  dbtsoListArr:
+  - {fileID: 11400000, guid: 15ddebdda49352841a528b222833ccf0, type: 2}
+  - {fileID: 11400000, guid: 3c86da5dd233bed43a334abca5115f90, type: 2}
+  - {fileID: 11400000, guid: 5adf1fb4a0fd5374f8bfecb9968e19fd, type: 2}
+  - {fileID: 11400000, guid: 716b1364410331d4db681780144e881b, type: 2}
+  - {fileID: 11400000, guid: ef5c91a70db38a249924dc1fe773f726, type: 2}
+  dropdownList: {fileID: 2105865879}
   mainMenu: {fileID: 814785015}
   uiTexts:
   - {fileID: 1532918266}
@@ -7978,6 +7986,12 @@ MonoBehaviour:
   - "\u5185\u759A"
   - "\u60B2\u4F24"
   - "\u5FEB\u4E50"
+  dbtsoListArr:
+  - {fileID: 11400000, guid: 15ddebdda49352841a528b222833ccf0, type: 2}
+  - {fileID: 11400000, guid: 3c86da5dd233bed43a334abca5115f90, type: 2}
+  - {fileID: 11400000, guid: 5adf1fb4a0fd5374f8bfecb9968e19fd, type: 2}
+  - {fileID: 11400000, guid: 716b1364410331d4db681780144e881b, type: 2}
+  - {fileID: 11400000, guid: ef5c91a70db38a249924dc1fe773f726, type: 2}
 --- !u!1001 &1348216069625665035
 PrefabInstance:
   m_ObjectHideFlags: 0

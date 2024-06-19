@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class Food : MonoBehaviour
     private Sprite[] bubbleSprites;
     [SerializeField]
     private Sprite[] bodySprites;
+    [SerializeField]
+    public static string[] categoryList;
 
 
 
@@ -28,8 +31,6 @@ public class Food : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         transform.Find("Minimap Icon").gameObject.SetActive(true);
-        if (dbtData != null)
-            InitFood();
     }
 
 
@@ -41,7 +42,6 @@ public class Food : MonoBehaviour
         //GetComponent<SpriteRenderer>().sprite = dbtData.bubbleSprite;
         //bodySprite = dbtData.bodySprite;
         category = dbtData.category.Trim();
-        ChangeBubbleSprite();
 
 
 
@@ -68,8 +68,10 @@ public class Food : MonoBehaviour
 
 
 
-        if (category == "有问题")
+        if (category == categoryList.Last())
             StartCoroutine(CountDownDisappear());
+
+        ChangeBubbleSprite();
 
     }
 
@@ -90,59 +92,67 @@ public class Food : MonoBehaviour
 
     private void ChangeBubbleSprite()
     {
-        int categoryIdx;
+        int categoryIdx = -99;
 
-        switch (category)
+
+        for (int i = 0; i < categoryList.Length - 1; i++)//skip the last one
         {
-            case "正念":
-                categoryIdx = 0;
+            if (category == categoryList[i])
+            {
+                categoryIdx = i;
                 break;
-            case "辨别并了解情绪":
-                categoryIdx = 1;
-                break;
-            case "核对事实":
-                categoryIdx = 2;
-                break;
-            case "辩证思维":
-                categoryIdx = 3;
-                break;
-            case "舒缓":
-                categoryIdx = 4;
-                break;
-            case "DEARMAN":
-                categoryIdx = 5;
-                break;
-            case "全然接纳":
-                categoryIdx = 6;
-                break;
-            case "解决问题":
-                categoryIdx = 7;
-                break;
-            case "立即停止":
-                categoryIdx = 8;
-                break;
-            case "自我抚慰":
-                categoryIdx = 9;
-                break;
-            case "智慧心":
-                categoryIdx = 10;
-                break;
-            case "建立自我掌控":
-                categoryIdx = 11;
-                break;
-
-
-
-
-
-            case "有问题":
-                categoryIdx = -1;
-                break;
-            default:
-                categoryIdx = -1;
-                //Debug.Log("no such category");
-                break;
+            }
         }
+        if (categoryIdx == -99)//有问题 or not exist
+        {
+            categoryIdx = -1;
+            if (category != categoryList.Last())//!=有问题
+            {
+                //Debug.Log("no such category");
+                Debug.Log("food text: " + dbtData.text.Trim());
+                Debug.Log("food category: " + dbtData.category.Trim());
+            }
+        }
+
+
+        /*
+        if (category == "正念")
+            categoryIdx = 0;
+        else if (category == "辨别并了解情绪")
+            categoryIdx = 1;
+        else if (category == "核对事实")
+            categoryIdx = 2;
+        else if (category == "辩证思维")
+            categoryIdx = 3;
+        else if (category == "舒缓")
+            categoryIdx = 4;
+        else if (category == "DEARMAN")
+            categoryIdx = 5;
+        else if (category == "全然接纳")
+            categoryIdx = 6;
+        else if (category == "解决问题")
+            categoryIdx = 7;
+        else if (category == "立即停止")
+            categoryIdx = 8;
+        else if (category == "自我抚慰")
+            categoryIdx = 9;
+        else if (category == "智慧心")
+            categoryIdx = 10;
+        else if (category == "建立自我掌控")
+            categoryIdx = 11;
+        else if (category == "有问题")
+            categoryIdx = -1;
+        else
+        {
+            categoryIdx = -1;
+            //Debug.Log("no such category");
+            Debug.Log("food text: " + text);
+            Debug.Log("food category: " + category);
+        }
+        */
+
+
+
 
         if (categoryIdx == -1)
             RandomBubbleSprite();
@@ -163,6 +173,10 @@ public class Food : MonoBehaviour
         //Debug.Log("eat");
         if (collision.tag == "Player")
         {
+
+
+
+
             Snake player = collision.GetComponent<Snake>();
             if (player == null)
                 return;
@@ -171,8 +185,11 @@ public class Food : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
 
 
-            if (category == "有问题")
+            if (category == categoryList.Last())
+            {
                 audioSource.PlayOneShot(eatSound[1]);
+                //Debug.Log("有問題");
+            }
             else
             {
                 player.AddBodySize(bodySprite);

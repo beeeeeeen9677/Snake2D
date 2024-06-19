@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameHandler : MonoBehaviour
@@ -41,6 +42,9 @@ public class GameHandler : MonoBehaviour
     private GameObject stonePrefab;
 
     private CSVReader csvReader;
+    [SerializeField]
+    private string[] moodIdx;
+
 
 
 
@@ -49,8 +53,15 @@ public class GameHandler : MonoBehaviour
     void Awake()
     {
         csvReader = GetComponent<CSVReader>();
-        csvReader.GetTextData();
+        //csvReader.GetTextData();
 
+        InitDBTListData();
+
+        Food.categoryList = csvReader.ReadCSV("categoryList");
+        for (int i = 0; i < Food.categoryList.Length; i++)
+        {
+            Food.categoryList[i] = Food.categoryList[i].Trim();
+        }
 
 
         //choose scenario, random if not selected by player in main menu
@@ -98,19 +109,88 @@ public class GameHandler : MonoBehaviour
     }
 
 
+
+
+
+    private void InitDBTListData()//clear the existing data and load the data in specific language
+    {
+        moodIdx = new string[scenarioList.Count];
+        for (int i = 0; i < scenarioList.Count; i++)
+        {
+            moodIdx[i] = scenarioList[i].mood;
+        }
+
+        //clear the list of all DBTSOList
+        foreach (DBTSOList dbtlist in scenarioList)
+        {
+            dbtlist.dbtList.Clear();
+        }
+
+
+        string[] csvRecord = csvReader.ReadCSV("snake2dTextData");
+        //int numOfCol = 6;
+
+        int languageIndex = PlayerPrefs.GetInt("Lanaguage");//0: TradChi, 1: SimpChi, 2: ENG
+        //total 191 records
+        for (int i = 0; i < csvRecord.Length; i++)
+        {
+            if (csvRecord[i].Trim() == "")
+                break;
+
+            string[] columnData = csvRecord[i].Split(',');
+
+
+            //Debug.Log(i + ": " + csvData[i]);
+            //create new DBT data and add into list
+
+            DBTData data = new DBTData();
+
+            //DBTData data = new DBTData();
+            data.text = columnData[0 + 3 * languageIndex].Trim();
+            //Debug.Log(columnData[0 + 3 * languageIndex].Trim());
+            data.category = columnData[1 + 3 * languageIndex].Trim();
+            //Debug.Log(columnData[1 + 3 * languageIndex].Trim());
+            //data.mood = csvData[i + 2];
+
+            int listIndex = Array.IndexOf(moodIdx, columnData[2 + 3 * languageIndex].Trim());//find corresponding DBTSO List by mood
+            //Debug.Log(columnData[2 + 3 * languageIndex].Trim());
+            //Debug.Log(listIndex);
+            scenarioList[listIndex].dbtList.Add(data);
+        }
+    }
+
+
+
     private void FixedUpdate()
     {
         HP -= Time.fixedDeltaTime;
         uiManager.SetHPValue(HP / MaxHP);
+
+        string msg;
+
+        switch (PlayerPrefs.GetInt("Language"))
+        {
+            case 0:
+                msg = "你的貪食蛇肚子太餓了";
+                break;
+            case 1:
+                msg = "你的贪食蛇肚子太饿了";
+                break;
+            default:
+                msg = "Your snake is too hungry";
+                break;
+        }
+
+
         if (HP <= 0)
-            EndGame("你的贪食蛇肚子太饿了");
+            EndGame(msg);
 
 
         timer += Time.fixedDeltaTime;
         uiManager.UpdateTimer(timer);
     }
 
-    public void SpawnStone()
+    public void SpawnStone()//spawn stone randomly
     {
         for (int i = 0; i < 8; i++)
         {
@@ -128,7 +208,7 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    public void SpawnFood(int seed = 0)
+    public void SpawnFood(int seed = 0)//spawn a new food randonly
     {
         long timestamp = (long)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
@@ -186,7 +266,7 @@ public class GameHandler : MonoBehaviour
     public void EatFood(string name, int score, string category)
     {
         SpawnFood();
-        if (category != "有问题")
+        if (category != Food.categoryList.Last())
         {
             AddHP(score / 5);
             totalScore += score;
@@ -206,7 +286,7 @@ public class GameHandler : MonoBehaviour
     }
 
 
-    public void AddRecordToDB(int score, float seconds)
+    public void AddRecordToDB(int score, float seconds)//call API to send data to DB
     {
         string playerName = PlayerPrefs.GetString("PlayerName");
         TimeSpan time = TimeSpan.FromSeconds(seconds);

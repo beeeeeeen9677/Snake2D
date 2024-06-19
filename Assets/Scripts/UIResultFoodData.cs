@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIResultFoodData : MonoBehaviour
@@ -15,7 +16,7 @@ public class UIResultFoodData : MonoBehaviour
         //timeTxt.text = time;
         nameTxt.text = time + "\t" + name;
         categoryTxt.text = category;
-        if (category == "有问题")
+        if (category == Food.categoryList.Last())
         {
             categoryTxt.color = Color.red;
         }

@@ -8,19 +8,12 @@ public class CSVReader : MonoBehaviour
     //[SerializeField] private DBTDataList dataList;
     [SerializeField]
     private List<DBTSOList> dbtsoLists;
-    //[SerializeField]
     private string[] moodIdx;
+    [SerializeField]
+    private TextAsset categoryListCsvFile;
 
 
     /*
-    private void Awake()
-    {
-        //GetTextData();
-    }
-    */
-
-
-    // Start is called before the first frame update
     public void GetTextData()  //call by GameHandler
     {
         //dataList = new DBTDataList();
@@ -41,35 +34,31 @@ public class CSVReader : MonoBehaviour
 
         ReadCSV();
     }
+    */
 
 
-    private void ReadCSV()
+    public string[] ReadCSV(string csvName)
     {
-        int numOfCol = 3;
-
-        string[] csvData = textAssetData.text.Split(new string[] { ",", "\n" }, StringSplitOptions.None);
-        //int numOfRow = csvData.Length / numOfCol;//number of row
-
-        //Debug.Log(csvData[570]);
-
-        for (int i = 0; i < csvData.Length; i += numOfCol)
+        string[] csvData;
+        if (csvName == "snake2dTextData")
         {
-            if (csvData[i].Trim() == "")
-                break;
-            //Debug.Log(i + ": " + csvData[i]);
-            //create new DBT data and add into list
-
-            DBTData data = new DBTData();
-
-            //DBTData data = new DBTData();
-            data.text = csvData[i].Trim();
-            data.category = csvData[i + 1].Trim();
-            //data.mood = csvData[i + 2];
-
-            int listIndex = Array.IndexOf(moodIdx, csvData[i + 2].Trim());//find corresponding DBTSO List by mood
-            //Debug.Log(listIndex);
-            dbtsoLists[listIndex].dbtList.Add(data);
+            csvData = textAssetData.text.Split('\n');
+            return csvData;
         }
+
+        else if (csvName == "categoryList")
+        {
+            csvData = categoryListCsvFile.text.Split('\n');
+            return csvData[PlayerPrefs.GetInt("Lanaguage")].Split(',');
+        }
+
+        else
+        {
+            Debug.Log("No such file");
+            return null;
+        }
+
+
     }
 
 }
