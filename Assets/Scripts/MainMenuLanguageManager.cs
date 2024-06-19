@@ -37,11 +37,13 @@ public class MainMenuLanguageManager : MonoBehaviour
 
     private void ChangeTextByLanguage(int languageIndex)//0: TradChi, 1: SimpChi, 2: ENG
     {
+        /*
         if (languageIndex == 2)//ENG not finished yet
         {
             Debug.Log("ENG not finished yet");
             return;
         }
+        */
 
         string[] mainMenuTextArr = mainMenuDataRows[languageIndex].Split(',');
         string[] scenarioTextArr = scenarioDataRows[languageIndex].Split(',');

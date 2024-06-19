@@ -1,3 +1,4 @@
 ﻿briefingMoodLabel,briefinginstruction,ReadyLabel,Score label,Food list label,GameOverText,PlayerNameLabel,Result-score,Result-time,result-Total Score,CollectedFoodLabel,retryBtnLabel,menuBtnLabel
-情緒,遊戲說明：遊戲的目的是説明大家分別有效的情緒管理方法。玩家可以操作貪食蛇拾取不同的態度/價值觀，以及避開障礙物，儘量讓貪食蛇存活得更久。,準備開始>,分數：,  已收集：,遊戲結束,玩家:,分數:,存活时间：,總分數:,拾取記錄：,再來一局,菜單
-情绪,游戏说明：游戏的目的是帮助大家分别有效的情绪管理方法。玩家可以操作贪食蛇拾取不同的态度/价值观，以及避开障碍物，尽量让贪食蛇存活得更久。,准备开始>,分数：,  已收集：,游戏结束,玩家: ,分数: ,存活時間：,总分数: ,拾取记录：,再来一局,菜单
+情緒,遊戲說明：遊戲的目的是說明大家分別有效的情緒管理方法。玩家可以操作貪食蛇拾取不同的態度/價值觀，以及避開障礙物，儘量讓貪食蛇存活得更久。,準備開始>,分數：,  已收集：,遊戲結束,玩家:,分數:,存活時間：,總分數:,拾取記錄：,再來一局,菜單
+情绪,游戏说明：游戏的目的是说明大家分别有效的情绪管理方法。玩家可以操作贪食蛇拾取不同的态度/价值观，以及避开障碍物，尽量让贪食蛇存活得更久。,准备开始>,分数：,  已收集：,游戏结束,玩家:,分数:,存活时间：,总分数:,拾取记录：,再来一局,菜单
+Mood,"Instruction: The purpose of the game is to illustrate effective emotional management methods for everyone. Players can control the snake to pick up different attitudes/values, and avoid obstacles to try to keep the snake alive as long as possible.",Starting In>,Score:,Collected:,Game Over,Player:,Score:,Alive time:,Total:,Collected Record: ,Play Again,Menu
