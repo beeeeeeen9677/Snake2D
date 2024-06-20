@@ -48,8 +48,16 @@ public class CSVReader : MonoBehaviour
 
         else if (csvName == "categoryList")
         {
-            csvData = categoryListCsvFile.text.Split('\n');
-            return csvData[PlayerPrefs.GetInt("Lanaguage")].Split(',');
+            csvData = categoryListCsvFile.text.Trim().Split('\n');
+            string[] cateColData = new string[csvData.Length - 1];//not counting the row of column name
+            for (int i = 1; i < csvData.Length; i++)
+            {
+                string[] csvRowData = csvData[i].Split(';');
+                cateColData[i - 1] = csvRowData[PlayerPrefs.GetInt("Language")].Trim();
+            }
+
+
+            return cateColData;
         }
 
         else

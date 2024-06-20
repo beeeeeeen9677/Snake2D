@@ -78,11 +78,14 @@ public class UIManager : MonoBehaviour
         effectTxt.GetComponent<TextMeshProUGUI>().text = "+" + amount;
     }
 
-    public void UpdateCollectedList(CollectedFoodData foodData)
+    public void UpdateCollectedList(CollectedFoodData foodData)  //show the first 5 newest collected foods
+
     {
-        //show the first 5 newest collected foods
         GameObject newFoodData = Instantiate(foodDataPrefab, foodList);
-        string foodText = foodData.foodName.Substring(0, Math.Min(foodData.foodName.Length, 7));
+        int maxLength = PlayerPrefs.GetInt("Language") == 2 ? 12 : 7;
+        //Debug.Log(PlayerPrefs.GetInt("Language"));
+        //at most show 'maxLength' chars
+        string foodText = foodData.foodName.Substring(0, Math.Min(foodData.foodName.Length, maxLength));
         if (foodData.foodName.Length > 6)
             foodText += "...";
 
@@ -133,17 +136,33 @@ public class UIManager : MonoBehaviour
     {
         briefing.StartCountDown(mood, sText);
 
+        string baseStr;
+        switch (PlayerPrefs.GetInt("Language"))
+        {
+            case 0:
+                baseStr = "情緒：";
+                break;
+            case 1:
+                baseStr = "情绪：";
+                break;
+            default:
+                baseStr = "Mood: ";
+                break;
+        }
 
-        scenario.text = "情绪：" + mood + "\n";
+
+        scenario.text = baseStr + mood + "\n";
         //scenario.text = sText;
         StartCoroutine(StartShowingScenario(sText));
     }
 
     IEnumerator StartShowingScenario(string sText)
     {
+        int baseStrLength = scenario.text.Length;
+
         for (int i = 0; i < sText.Length; i++)
         {
-            StartCoroutine(GenerateRandomChar(sText[i], i + 6));
+            StartCoroutine(GenerateRandomChar(sText[i], i + baseStrLength));
             yield return new WaitForSeconds(0.05f);
         }
     }

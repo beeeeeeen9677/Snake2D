@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,11 +43,18 @@ public class Food : MonoBehaviour
         category = dbtData.category.Trim();
 
 
-
-
         //calculate the size of text
         //min: 40    max: 65
         //normalize    (n-2)/(5-2)   at most 5 char for 1 line
+
+        ui_text.text = text;
+        ui_text.resizeTextMinSize = PlayerPrefs.GetInt("Language") == 2 ? 1 : 40;//set the min size for best fit
+        //Debug.Log(PlayerPrefs.GetInt("Language"));
+
+
+        //using best fit to resize
+        /*
+        //resize
         int textLength = text.Length;
         textLength = Mathf.Clamp(textLength, 2, 5);
 
@@ -64,7 +70,7 @@ public class Food : MonoBehaviour
                 builder.Append('\n');
             }
         }
-        ui_text.text = builder.ToString();
+        */
 
 
 

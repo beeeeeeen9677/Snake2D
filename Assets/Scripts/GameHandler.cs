@@ -130,14 +130,14 @@ public class GameHandler : MonoBehaviour
         string[] csvRecord = csvReader.ReadCSV("snake2dTextData");
         //int numOfCol = 6;
 
-        int languageIndex = PlayerPrefs.GetInt("Lanaguage");//0: TradChi, 1: SimpChi, 2: ENG
+        int languageIndex = PlayerPrefs.GetInt("Language");//0: TradChi, 1: SimpChi, 2: ENG
         //total 191 records
         for (int i = 0; i < csvRecord.Length; i++)
         {
             if (csvRecord[i].Trim() == "")
                 break;
 
-            string[] columnData = csvRecord[i].Split(',');
+            string[] columnData = csvRecord[i].Split(';');
 
 
             //Debug.Log(i + ": " + csvData[i]);

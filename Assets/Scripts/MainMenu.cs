@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private GameObject[] langaugeBtn;
 
-    public Action<int> OnLanagueChanged;
+    public Action<int> OnLanguageChanged;
 
 
     private void Awake()
@@ -107,13 +107,14 @@ public class MainMenu : MonoBehaviour
 
     public void OnLangaugeBtnPressed(int index)//0: TradChi, 1: SimpChi, 2: ENG
     {
-        PlayerPrefs.SetInt("Lanaguage", index);
+        PlayerPrefs.SetInt("Language", index);
+
         ChangeLangaugeBtnVisual();
     }
 
     private void ChangeLangaugeBtnVisual()
     {
-        int index = PlayerPrefs.GetInt("Lanaguage");
+        int index = PlayerPrefs.GetInt("Language");
 
         foreach (GameObject btn in langaugeBtn)
         {
@@ -121,6 +122,6 @@ public class MainMenu : MonoBehaviour
         }
         langaugeBtn[index].GetComponent<Image>().enabled = true;
 
-        OnLanagueChanged?.Invoke(index);
+        OnLanguageChanged?.Invoke(index);
     }
 }

@@ -18,7 +18,7 @@ public class GameSceneLanguageManager : MonoBehaviour
     private void Awake()
     {
         string[] temp = gameSceneTextCsvFile.text.Trim().Split('\n');
-        columnName = temp[0].Split(',');
+        columnName = temp[0].Split(';');
         gameSceneDataRows = temp.Skip(1).ToArray();
 
         for (int i = 0; i < columnName.Length; i++)
@@ -31,8 +31,8 @@ public class GameSceneLanguageManager : MonoBehaviour
 
     private void SetText()
     {
-        int languageIndex = PlayerPrefs.GetInt("Lanaguage");
-        string[] textData = gameSceneDataRows[languageIndex].Split(',');
+        int languageIndex = PlayerPrefs.GetInt("Language");
+        string[] textData = gameSceneDataRows[languageIndex].Split(';');
 
         foreach (Text uiText in uiTexts)
         {

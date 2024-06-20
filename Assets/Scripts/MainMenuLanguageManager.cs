@@ -10,7 +10,7 @@ public class MainMenuLanguageManager : MonoBehaviour
     private TextAsset scenarioCsvFile; // scenario data in different language 
     [SerializeField]
     private DBTSOList[] dbtsoListArr;
-    private string[] scenarioDataRows;
+    private string[] scenarioColData;
     [SerializeField]
     private MenuDropdown dropdownList;
 
@@ -19,20 +19,23 @@ public class MainMenuLanguageManager : MonoBehaviour
     private MainMenu mainMenu;
     [SerializeField]
     private Text[] uiTexts;
-    private void OnEnable()
+
+
+    private void OnEnable()//get notice when BTN is pressed
     {
-        mainMenu.OnLanagueChanged += ChangeTextByLanguage;
+        mainMenu.OnLanguageChanged += ChangeTextByLanguage;
     }
     private void OnDestroy()
     {
-        mainMenu.OnLanagueChanged -= ChangeTextByLanguage;
+        mainMenu.OnLanguageChanged -= ChangeTextByLanguage;
     }
 
 
     private void Awake()
     {
         mainMenuDataRows = mainmenuCsvFile.text.Split('\n');
-        scenarioDataRows = scenarioCsvFile.text.Split('\n');
+
+        scenarioColData = scenarioCsvFile.text.Trim().Split('\n');
     }
 
     private void ChangeTextByLanguage(int languageIndex)//0: TradChi, 1: SimpChi, 2: ENG
@@ -45,8 +48,8 @@ public class MainMenuLanguageManager : MonoBehaviour
         }
         */
 
-        string[] mainMenuTextArr = mainMenuDataRows[languageIndex].Split(',');
-        string[] scenarioTextArr = scenarioDataRows[languageIndex].Split(',');
+        string[] mainMenuTextArr = mainMenuDataRows[languageIndex].Split(';');
+        string[] scenarioTextArr = new string[scenarioColData.Length - 1]; //for storing the scenario data of one of the column
 
         //Debug.Log(uiTexts.Length);
         //Debug.Log(mainMenuTextArr.Length);
@@ -56,6 +59,16 @@ public class MainMenuLanguageManager : MonoBehaviour
         {
             uiTexts[i].text = mainMenuTextArr[i];
         }
+
+
+        for (int i = 1; i < scenarioColData.Length; i++)//skip the row storing column name
+        {
+            string[] scenarioRowData = scenarioColData[i].Split(';');
+            scenarioTextArr[i - 1] = scenarioRowData[languageIndex].Trim();
+        }
+
+
+
 
         for (int i = 0; i < dbtsoListArr.Length; i++)
         {
