@@ -47,12 +47,14 @@ public class Ranking : MonoBehaviour // ranking list
             //Debug.Log(rec.Name + " " + rec.Score + " " + rec.Time + " " + rec.Total);
             GameObject data = Instantiate(rankingDataPrefab, rankingListPanel);
             data.GetComponent<RankingData>().SetData(rec.Name, (int)rec.Score, rec.Time, (int)rec.Total);
+
         }
     }
 
     private void IntantiateMessage(string textMsg)
     {
         GameObject message = new GameObject("message", typeof(TextMeshProUGUI));
+        //message.AddComponent<CanvasRenderer>();
         TextMeshProUGUI msg = message.GetComponent<TextMeshProUGUI>();
         msg.text = textMsg;
         msg.alignment = TextAlignmentOptions.Center;
@@ -60,7 +62,20 @@ public class Ranking : MonoBehaviour // ranking list
         msg.fontSize = 38;
         message.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 200);
         Instantiate(message, rankingListPanel);
+        //StartCoroutine(CheckMsg(ptmessage));
     }
+
+    /*
+    IEnumerator CheckMsg(GameObject msg)
+    {
+        while (true)
+        {
+            Debug.Log(msg.transform.parent.gameObject.name);
+            yield return null;
+        }
+    }
+    */
+
 
     public void ClearShowingList()
     {
@@ -76,6 +91,7 @@ public class Ranking : MonoBehaviour // ranking list
     {
         //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByName();
         //ListAllRecords(records);
+
         DatabaseHandler.DB_instance.GetAllRecords("Name");
         ShowBaseImage(0);
     }
@@ -84,6 +100,7 @@ public class Ranking : MonoBehaviour // ranking list
     {
         //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByScore();
         //ListAllRecords(records);
+
         DatabaseHandler.DB_instance.GetAllRecords("Score");
         ShowBaseImage(1);
     }
@@ -91,6 +108,7 @@ public class Ranking : MonoBehaviour // ranking list
     {
         //List<Snake2dRank> records = DatabaseHandler.DB_instance.GetAllRecordOrderByTime();
         //ListAllRecords(records);
+
         DatabaseHandler.DB_instance.GetAllRecords("Time");
         ShowBaseImage(2);
     }
