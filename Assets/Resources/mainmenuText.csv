@@ -1,3 +1,16 @@
-﻿開始遊戲;排行榜;情景;語言;請輸入你的名字;排行榜;玩家;分數;存活;總分;玩家;分數;存活;總分;玩家名稱
-开始游戏;排行榜;情景;语言;请输入你的名字;排行榜;玩家;分数;存活;总分;玩家;分数;存活;总分;玩家名称
-Start;Ranking;Scenario;Language;Please input your name;Ranking;Player;Score;Time;Total Score;Player;Score;Time;Total Score;Your Name
+﻿TC;SC;EN
+開始遊戲;开始游戏;Start
+排行榜;排行榜;Ranking
+情景;情景;Scenario
+語言;语言;Language
+請輸入你的名字;请输入你的名字;Please input your name
+排行榜;排行榜;Ranking
+玩家;玩家;Player
+分數;分数;Score
+存活;存活;Time
+總分;总分;Total Score
+玩家;玩家;Player
+分數;分数;Score
+存活;存活;Time
+總分;总分;Total Score
+玩家名稱;玩家名称;Your Name

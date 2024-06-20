@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour  //game scene UI manager
 {
     public static UIManager instance;
     [SerializeField]
@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
-    public void ShowEffectText(int amount)
+    public void ShowEffectText(int amount) //increase score text effect
     {
         GameObject effectTxt = Instantiate(effectTxtPrefab, scoreText.transform);
         effectTxt.GetComponent<TextMeshProUGUI>().text = "+" + amount;
@@ -106,7 +106,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Game Over
+    //call when Game Over
     public void ShowGameOverPanel(string msg, int totalScore, float seconds, List<CollectedFoodData> foodList)
     {
         gameOverPanel.SetActive(true);
@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowScenario(string mood, string sText)
+    public void ShowScenario(string mood, string sText)//set the scenario text in the left upper corner
     {
         briefing.StartCountDown(mood, sText);
 

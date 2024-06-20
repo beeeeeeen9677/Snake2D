@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Briefing : MonoBehaviour
+public class Briefing : MonoBehaviour    //for briefing screen in game scene
+
 {
     [SerializeField]
     private Text mood;
@@ -18,7 +19,7 @@ public class Briefing : MonoBehaviour
 
     private bool startCD = false;
 
-    public void StartCountDown(string mood, string scenario)
+    public void StartCountDown(string mood, string scenario) //start briefing count down
     {
         gameObject.SetActive(true);
 
@@ -53,7 +54,7 @@ public class Briefing : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1;
-        Destroy(gameObject);
+        Destroy(gameObject); //destroy the briefing screen
     }
 
 }

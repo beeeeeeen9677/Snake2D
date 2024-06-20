@@ -9,10 +9,11 @@ public class DatabaseHandler : MonoBehaviour
     public static DatabaseHandler DB_instance;
 
     private string[] records;
-    private string InsertDataUrl = "https://beeeeeeenhihi.000webhostapp.com/insertData.php";
+    private string insertDataUrl = "https://beeeeeeenhihi.000webhostapp.com/insertData.php"; //api for inserting data
+    //private string getDataUrl = "https://beeeeeeenhihi.000webhostapp.com/ranking.php"    //api for getting data
 
 
-    public Action<List<Snake2dRank>> OnDataLoaded;
+    public Action<List<DataManager>> OnDataLoaded;
 
 
     private void Awake()
@@ -31,13 +32,12 @@ public class DatabaseHandler : MonoBehaviour
 
 
 
-    public void GetAllRecords(string orderBy)
+    public void GetAllRecords(string orderBy) //load all records
     {
         StartCoroutine(LoadRecord(orderBy));
     }
 
 
-    // Start is called before the first frame update
     IEnumerator LoadRecord(string orderBy)
     {
         UnityWebRequest www = UnityWebRequest.Get("https://beeeeeeenhihi.000webhostapp.com/ranking.php" + "?orderBy=" + orderBy);
@@ -61,14 +61,14 @@ public class DatabaseHandler : MonoBehaviour
             */
 
 
-            System.Collections.Generic.List<Snake2dRank> rankingData
-                = new System.Collections.Generic.List<Snake2dRank>();
+            System.Collections.Generic.List<DataManager> rankingData
+                = new System.Collections.Generic.List<DataManager>();
             foreach (string record in records)
             {
                 if (record == "")
                     break; //last splitted string
 
-                Snake2dRank data = new Snake2dRank(
+                DataManager data = new DataManager(
                     GetDataValue(record, "Name"),
                     int.Parse(GetDataValue(record, "Score")),
                     GetDataValue(record, "Time"),
@@ -97,6 +97,8 @@ public class DatabaseHandler : MonoBehaviour
     }
 
 
+
+    //upload new record
     public void AddRecordToDB(string playerName, int score, string timeStr, int totalScore)
     {
         WWWForm form = new WWWForm();
@@ -108,9 +110,10 @@ public class DatabaseHandler : MonoBehaviour
         StartCoroutine(Upload(form));
     }
 
+
     IEnumerator Upload(WWWForm form)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(InsertDataUrl, form))
+        using (UnityWebRequest www = UnityWebRequest.Post(insertDataUrl, form))
         {
             yield return www.SendWebRequest();
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuDropdown : MonoBehaviour
+public class MenuDropdown : MonoBehaviour //for mood drop down list ibn main menu
 {
     [SerializeField]
     private List<string> moods;

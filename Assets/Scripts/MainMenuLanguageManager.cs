@@ -1,7 +1,8 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuLanguageManager : MonoBehaviour
+public class MainMenuLanguageManager : MonoBehaviour // change the UI lanaguage in main menu
 {
     [SerializeField]
     private TextAsset mainmenuCsvFile; // Text in different language for main menu
@@ -21,7 +22,7 @@ public class MainMenuLanguageManager : MonoBehaviour
     private Text[] uiTexts;
 
 
-    private void OnEnable()//get notice when BTN is pressed
+    private void OnEnable()//get notice when any languageBTN is pressed
     {
         mainMenu.OnLanguageChanged += ChangeTextByLanguage;
     }
@@ -33,11 +34,17 @@ public class MainMenuLanguageManager : MonoBehaviour
 
     private void Awake()
     {
-        mainMenuDataRows = mainmenuCsvFile.text.Split('\n');
+
+
+        mainMenuDataRows = mainmenuCsvFile.text.Trim().Split('\n');
+        mainMenuDataRows = mainMenuDataRows.Skip(1).ToArray();//skip the row of column name
+
 
         scenarioColData = scenarioCsvFile.text.Trim().Split('\n');
     }
 
+
+    //change UI language by selected langauge
     private void ChangeTextByLanguage(int languageIndex)//0: TradChi, 1: SimpChi, 2: ENG
     {
         /*
@@ -48,7 +55,6 @@ public class MainMenuLanguageManager : MonoBehaviour
         }
         */
 
-        string[] mainMenuTextArr = mainMenuDataRows[languageIndex].Split(';');
         string[] scenarioTextArr = new string[scenarioColData.Length - 1]; //for storing the scenario data of one of the column
 
         //Debug.Log(uiTexts.Length);
@@ -57,7 +63,8 @@ public class MainMenuLanguageManager : MonoBehaviour
 
         for (int i = 0; i < uiTexts.Length; i++)
         {
-            uiTexts[i].text = mainMenuTextArr[i];
+            string[] rowData = mainMenuDataRows[i].Split(';');
+            uiTexts[i].text = rowData[languageIndex];
         }
 
 
@@ -67,9 +74,7 @@ public class MainMenuLanguageManager : MonoBehaviour
             scenarioTextArr[i - 1] = scenarioRowData[languageIndex].Trim();
         }
 
-
-
-
+        //set the mood and scenario for DBTSO list
         for (int i = 0; i < dbtsoListArr.Length; i++)
         {
             dbtsoListArr[i].mood = scenarioTextArr[i * 2];

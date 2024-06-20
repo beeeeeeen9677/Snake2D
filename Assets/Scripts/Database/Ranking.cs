@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Ranking : MonoBehaviour
+public class Ranking : MonoBehaviour // ranking list
 {
     [SerializeField]
     private GameObject rankingDataPrefab;
@@ -26,7 +26,7 @@ public class Ranking : MonoBehaviour
     }
 
 
-    private void ListAllRecords(List<Snake2dRank> records)
+    private void ListAllRecords(List<DataManager> records)//show all records
     {
         ClearShowingList();
         //Debug.Log(records.Count);
@@ -42,7 +42,7 @@ public class Ranking : MonoBehaviour
 
             return;
         }
-        foreach (Snake2dRank rec in records)
+        foreach (DataManager rec in records)
         {
             //Debug.Log(rec.Name + " " + rec.Score + " " + rec.Time + " " + rec.Total);
             GameObject data = Instantiate(rankingDataPrefab, rankingListPanel);

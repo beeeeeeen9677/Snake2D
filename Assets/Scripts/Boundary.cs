@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Boundary : MonoBehaviour
+public class Boundary : MonoBehaviour //boundary in game scene
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {

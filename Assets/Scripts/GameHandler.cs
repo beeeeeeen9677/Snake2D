@@ -11,6 +11,7 @@ public class GameHandler : MonoBehaviour
     private int width;
     [SerializeField]
     private int height;
+
     [SerializeField]
     private GameObject player;
     [SerializeField]
@@ -20,7 +21,7 @@ public class GameHandler : MonoBehaviour
     private List<DBTSOList> scenarioList;
     private DBTSOList dbtsoList;
     [SerializeField]
-    private int numOfInitFoods = 6;
+    private int numOfInitFoods = 20;
 
     [field: SerializeField]
     public float HP { get; private set; }
@@ -31,7 +32,7 @@ public class GameHandler : MonoBehaviour
     private bool gameover = false;
 
 
-    public List<CollectedFoodData> collectedFoodList { get; private set; } = new List<CollectedFoodData>();
+    public List<CollectedFoodData> collectedFoodList { get; private set; } = new List<CollectedFoodData>();//store all collected food in a match
 
     private int dbtListLength;
 
@@ -43,7 +44,7 @@ public class GameHandler : MonoBehaviour
 
     private CSVReader csvReader;
     [SerializeField]
-    private string[] moodIdx;
+    private string[] moodIdx;//mood of current match
 
 
 
@@ -58,7 +59,8 @@ public class GameHandler : MonoBehaviour
         InitDBTListData();
 
         Food.categoryList = csvReader.ReadCSV("categoryList");
-        for (int i = 0; i < Food.categoryList.Length; i++)
+
+        for (int i = 0; i < Food.categoryList.Length; i++)//load category list
         {
             Food.categoryList[i] = Food.categoryList[i].Trim();
         }
@@ -90,10 +92,10 @@ public class GameHandler : MonoBehaviour
         instance = this;
 
 
-        SpawnStone();
+        SpawnStone(); //generate some stones
 
         for (int i = 0; i < numOfInitFoods; i++)
-        {//generate some random foods when started
+        {//generate some random foods when started  
             SpawnFood(i);
         }
 
@@ -145,12 +147,11 @@ public class GameHandler : MonoBehaviour
 
             DBTData data = new DBTData();
 
-            //DBTData data = new DBTData();
             data.text = columnData[0 + 3 * languageIndex].Trim();
             //Debug.Log(columnData[0 + 3 * languageIndex].Trim());
             data.category = columnData[1 + 3 * languageIndex].Trim();
             //Debug.Log(columnData[1 + 3 * languageIndex].Trim());
-            //data.mood = csvData[i + 2];
+
 
             int listIndex = Array.IndexOf(moodIdx, columnData[2 + 3 * languageIndex].Trim());//find corresponding DBTSO List by mood
             //Debug.Log(columnData[2 + 3 * languageIndex].Trim());
@@ -286,7 +287,7 @@ public class GameHandler : MonoBehaviour
     }
 
 
-    public void AddRecordToDB(int score, float seconds)//call API to send data to DB
+    public void AddRecordToDB(int score, float seconds)//add data to DB
     {
         string playerName = PlayerPrefs.GetString("PlayerName");
         TimeSpan time = TimeSpan.FromSeconds(seconds);

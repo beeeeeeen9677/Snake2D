@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RankingData : MonoBehaviour
+public class RankingData : MonoBehaviour //hold a record, used in ranking list
 {
     [SerializeField]
     private Text playerName;

@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultPanel : MonoBehaviour
+public class ResultPanel : MonoBehaviour //game over result screen
 {
     [SerializeField]
     private Text playerNameTxt;

@@ -3,27 +3,43 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameSceneLanguageManager : MonoBehaviour
+public class GameSceneLanguageManager : MonoBehaviour //change UI language in game scene
 {
     [SerializeField]
     private TextAsset gameSceneTextCsvFile; // Text in different language for game scene
     [SerializeField]
     private Text[] uiTexts;
     [SerializeField]
-    private string[] columnName;
-    private string[] gameSceneDataRows;//0: TradChi, 1: SimpChi, 2: ENG
+    private string[] objLabel;
+    private string[,] gameSceneUITextData;//0: TradChi, 1: SimpChi, 2: ENG
 
 
 
     private void Awake()
     {
         string[] temp = gameSceneTextCsvFile.text.Trim().Split('\n');
-        columnName = temp[0].Split(';');
-        gameSceneDataRows = temp.Skip(1).ToArray();
-
-        for (int i = 0; i < columnName.Length; i++)
+        temp = temp.Skip(1).ToArray();//skip the row of column name
+        objLabel = new string[temp.Length];
+        for (int i = 0; i < objLabel.Length; i++)
         {
-            columnName[i] = columnName[i].Trim();
+            objLabel[i] = temp[i].Trim().Split(';').ToArray()[0];
+        }
+
+        gameSceneUITextData = new string[temp.Length, temp[0].Trim().Split(';').ToArray().Length - 1];//[13,3]
+        for (int i = 0; i < gameSceneUITextData.GetLength(0); i++)
+        {
+            string[] rowData = temp[i].Trim().Split(';').ToArray();
+            for (int j = 0; j < gameSceneUITextData.GetLength(1); j++)
+            {
+                gameSceneUITextData[i, j] = rowData[j + 1].Trim();//first column is label
+            }
+        }
+
+
+
+        for (int i = 0; i < objLabel.Length; i++)
+        {
+            objLabel[i] = objLabel[i].Trim();
         }
 
         SetText();
@@ -32,7 +48,12 @@ public class GameSceneLanguageManager : MonoBehaviour
     private void SetText()
     {
         int languageIndex = PlayerPrefs.GetInt("Language");
-        string[] textData = gameSceneDataRows[languageIndex].Split(';');
+        //string[] textData = gameSceneUITextData[languageIndex].Split(';');
+        string[] textData = new string[gameSceneUITextData.GetLength(0)];
+        for (int i = 0; i < textData.Length; i++)
+        {
+            textData[i] = gameSceneUITextData[i, languageIndex];
+        }
 
         foreach (Text uiText in uiTexts)
         {
@@ -42,7 +63,7 @@ public class GameSceneLanguageManager : MonoBehaviour
             Debug.Log(Array.IndexOf(columnName, uiText.gameObject.name));
             */
 
-            uiText.text = textData[Array.IndexOf(columnName, uiText.gameObject.name)];
+            uiText.text = textData[Array.IndexOf(objLabel, uiText.gameObject.name)];
         }
     }
 }

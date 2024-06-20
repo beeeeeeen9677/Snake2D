@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour // for main menu
 {
     [SerializeField]
     private InputField inputField;
@@ -18,11 +18,16 @@ public class MainMenu : MonoBehaviour
     private GameObject[] langaugeBtn;
 
     public Action<int> OnLanguageChanged;
+    [SerializeField]
+    private Image titleImg;
+    [SerializeField]
+    private Sprite[] titleImgs;
 
 
     private void Awake()
     {
         ChangeLangaugeBtnVisual();
+        ChangeTitleImage();
         muteBtn.sprite = muteBtnImg[PlayerPrefs.GetInt("Muted")];
     }
 
@@ -70,7 +75,7 @@ public class MainMenu : MonoBehaviour
         rankingList.gameObject.SetActive(!rankingList.gameObject.activeInHierarchy);
         if (rankingList.gameObject.activeInHierarchy)
         {
-            //show ranking
+            //show ranking list
             rankingList.ShowRanking();
         }
     }
@@ -109,10 +114,17 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("Language", index);
 
+        ChangeTitleImage();
+
         ChangeLangaugeBtnVisual();
     }
 
-    private void ChangeLangaugeBtnVisual()
+    private void ChangeTitleImage()
+    {
+        titleImg.sprite = titleImgs[PlayerPrefs.GetInt("Language")];
+    }
+
+    private void ChangeLangaugeBtnVisual() //change the visual of the pressed btn
     {
         int index = PlayerPrefs.GetInt("Language");
 

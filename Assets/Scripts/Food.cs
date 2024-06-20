@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Food : MonoBehaviour
+public class Food : MonoBehaviour //food in game scene
 {
     private string text;
     [SerializeField]
@@ -73,7 +73,7 @@ public class Food : MonoBehaviour
         */
 
 
-
+        //"有問題"
         if (category == categoryList.Last())
             StartCoroutine(CountDownDisappear());
 
@@ -85,11 +85,11 @@ public class Food : MonoBehaviour
 
     IEnumerator CountDownDisappear()//destroy food after 30 - 40 seconds (for 有問題 food only)
     {
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(35);
         Animator anim = GetComponent<Animator>();
         anim.enabled = true; //flashing effect
         var random = new System.Random(text.Length + category.Length);
-        int randomIdx = random.Next(0, 10);
+        int randomIdx = random.Next(7, 15);
         //Debug.Log(randomIdx);
         yield return new WaitForSeconds(randomIdx);
         Destroy(gameObject);
@@ -101,7 +101,7 @@ public class Food : MonoBehaviour
         int categoryIdx = -99;
 
 
-        for (int i = 0; i < categoryList.Length - 1; i++)//skip the last one
+        for (int i = 0; i < categoryList.Length - 1; i++)//skip the last one(有问题)
         {
             if (category == categoryList[i])
             {
@@ -174,15 +174,11 @@ public class Food : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = bubbleSprites[UnityEngine.Random.Range(0, bubbleSprites.Length)];
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //eat by player
     {
         //Debug.Log("eat");
         if (collision.tag == "Player")
         {
-
-
-
-
             Snake player = collision.GetComponent<Snake>();
             if (player == null)
                 return;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MarkerManager : MonoBehaviour
+public class MarkerManager : MonoBehaviour //save the position and rotation of the previous body
 {
     public class Marker
     {
