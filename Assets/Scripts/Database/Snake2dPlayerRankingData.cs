@@ -1,4 +1,4 @@
-public class DataManager
+public class Snake2dPlayerRankingData
 {
     //record
     public string Name;
@@ -6,7 +6,7 @@ public class DataManager
     public string Time;
     public int Total;
 
-    public DataManager(string name, int score, string time, int totalScore)
+    public Snake2dPlayerRankingData(string name, int score, string time, int totalScore)
     {
         Name = name;
         Score = score;

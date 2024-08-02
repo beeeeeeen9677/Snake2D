@@ -4,11 +4,9 @@ using UnityEngine.UI;
 
 public class MainMenuLanguageManager : MonoBehaviour // change the UI lanaguage in main menu
 {
-    [SerializeField]
-    private TextAsset mainmenuCsvFile; // Text in different language for main menu
+
     private string[] mainMenuDataRows;//0: TradChi, 1: SimpChi, 2: ENG
-    [SerializeField]
-    private TextAsset scenarioCsvFile; // scenario data in different language 
+
     [SerializeField]
     private DBTSOList[] dbtsoListArr;
     private string[] scenarioColData;
@@ -20,6 +18,8 @@ public class MainMenuLanguageManager : MonoBehaviour // change the UI lanaguage 
     private MainMenu mainMenu;
     [SerializeField]
     private Text[] uiTexts;
+
+    private bool isFinishedInit;
 
 
     private void OnEnable()//get notice when any languageBTN is pressed
@@ -34,26 +34,29 @@ public class MainMenuLanguageManager : MonoBehaviour // change the UI lanaguage 
 
     private void Awake()
     {
+        isFinishedInit = false;
+    }
 
 
-        mainMenuDataRows = mainmenuCsvFile.text.Trim().Split('\n');
+    private void InitData()
+    {
+        mainMenuDataRows = DataManager.instance.mainMenuText.text.Trim().Split('\n');
         mainMenuDataRows = mainMenuDataRows.Skip(1).ToArray();//skip the row of column name
 
 
-        scenarioColData = scenarioCsvFile.text.Trim().Split('\n');
+        scenarioColData = DataManager.instance.scenarioData.text.Trim().Split('\n');
+
+        isFinishedInit = true;
     }
 
 
     //change UI language by selected langauge
     private void ChangeTextByLanguage(int languageIndex)//0: TradChi, 1: SimpChi, 2: ENG
     {
-        /*
-        if (languageIndex == 2)//ENG not finished yet
-        {
-            Debug.Log("ENG not finished yet");
-            return;
-        }
-        */
+        if (!isFinishedInit)
+            InitData();
+
+
 
         string[] scenarioTextArr = new string[scenarioColData.Length - 1]; //for storing the scenario data of one of the column
 
@@ -64,14 +67,14 @@ public class MainMenuLanguageManager : MonoBehaviour // change the UI lanaguage 
         for (int i = 0; i < uiTexts.Length; i++)
         {
             string[] rowData = mainMenuDataRows[i].Split(';');
-            uiTexts[i].text = rowData[languageIndex];
+            uiTexts[i].text = rowData[languageIndex + 1];//add 1 to skip the first col(Key)
         }
 
 
         for (int i = 1; i < scenarioColData.Length; i++)//skip the row storing column name
         {
             string[] scenarioRowData = scenarioColData[i].Split(';');
-            scenarioTextArr[i - 1] = scenarioRowData[languageIndex].Trim();
+            scenarioTextArr[i - 1] = scenarioRowData[languageIndex + 1].Trim();//add 1 to skip the first col(Key)
         }
 
         //set the mood and scenario for DBTSO list

@@ -26,7 +26,7 @@ public class Ranking : MonoBehaviour // ranking list
     }
 
 
-    private void ListAllRecords(List<DataManager> records)//show all records
+    private void ListAllRecords(List<Snake2dPlayerRankingData> records)//show all records
     {
         ClearShowingList();
         //Debug.Log(records.Count);
@@ -42,7 +42,7 @@ public class Ranking : MonoBehaviour // ranking list
 
             return;
         }
-        foreach (DataManager rec in records)
+        foreach (Snake2dPlayerRankingData rec in records)
         {
             //Debug.Log(rec.Name + " " + rec.Score + " " + rec.Time + " " + rec.Total);
             GameObject data = Instantiate(rankingDataPrefab, rankingListPanel);

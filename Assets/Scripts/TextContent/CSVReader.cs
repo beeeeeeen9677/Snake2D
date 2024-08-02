@@ -1,79 +1,63 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+
 public class CSVReader : MonoBehaviour
 {
-    [SerializeField]
-    private TextAsset textAssetData;
-    //[SerializeField] private DBTDataList dataList;
-    [SerializeField]
-    private List<DBTSOList> dbtsoLists;
-    private string[] moodIdx;
-    [SerializeField]
-    private TextAsset categoryListCsvFile;
+    public static CSVReader instance;
 
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     /*
-    public void GetTextData()  //call by GameHandler
+    private void Start()
     {
-        //dataList = new DBTDataList();
-        //dataList.dbtDataList = new List<DBTSO>();
-        //dbtsoLists = new List<DBTSOList>();  //init in inspector
-
-        moodIdx = new string[dbtsoLists.Count];
-        for (int i = 0; i < dbtsoLists.Count; i++)
-        {
-            moodIdx[i] = dbtsoLists[i].mood;
-        }
-
-        //clear the list of all DBTSOList
-        foreach (DBTSOList dbtlist in dbtsoLists)
-        {
-            dbtlist.dbtList.Clear();
-        }
-
-        ReadCSV();
+        ReadAllCSV();
     }
     */
 
-
-    public string[] ReadCSV(string csvName)
+    public void ReadAllCSV()// call by MainMenu.cs
     {
-        string[] csvData;
-        if (csvName == "snake2dTextData")
-        {
-            csvData = textAssetData.text.Split('\n');
-            return csvData;
-        }
-
-        else if (csvName == "categoryList")
-        {
-            csvData = categoryListCsvFile.text.Trim().Split('\n');
-            string[] cateColData = new string[csvData.Length - 1];//not counting the row of column name
-            for (int i = 1; i < csvData.Length; i++)
-            {
-                string[] csvRowData = csvData[i].Split(';');
-                cateColData[i - 1] = csvRowData[PlayerPrefs.GetInt("Language")].Trim();
-            }
-
-
-            return cateColData;
-        }
-
-        else
-        {
-            Debug.Log("No such file");
-            return null;
-        }
-
-
+        ReadCSV("categoryList");
+        ReadCSV("gameSceneUITextData");
+        ReadCSV("mainmenuText");
+        ReadCSV("scenarioData");
+        ReadCSV("snake2dTextData");
     }
 
-}
-
-[Serializable]
-public class DBTData
-{
-    public string text;
-    public string category;
+    private void ReadCSV(string csvName)
+    {
+        if (csvName == "categoryList")
+        {
+            DataManager.instance.categoryList = Resources.Load<TextAsset>(csvName);
+        }
+        else if (csvName == "gameSceneUITextData")
+        {
+            DataManager.instance.gameSceneUITextData = Resources.Load<TextAsset>(csvName);
+        }
+        else if (csvName == "mainmenuText")
+        {
+            DataManager.instance.mainMenuText = Resources.Load<TextAsset>(csvName);
+        }
+        else if (csvName == "scenarioData")
+        {
+            DataManager.instance.scenarioData = Resources.Load<TextAsset>(csvName);
+        }
+        else if (csvName == "snake2dTextData")
+        {
+            DataManager.instance.snake2dTextData = Resources.Load<TextAsset>(csvName);
+        }
+        else
+        {
+            Debug.LogError("CSV Reader: no such csv file. ");
+        }
+    }
 }

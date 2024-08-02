@@ -24,8 +24,9 @@ public class MainMenu : MonoBehaviour // for main menu
     private Sprite[] titleImgs;
 
 
-    private void Awake()
+    private void Start()
     {
+        CSVReader.instance.ReadAllCSV();
         ChangeLangaugeBtnVisual();
         ChangeTitleImage();
         muteBtn.sprite = muteBtnImg[PlayerPrefs.GetInt("Muted")];

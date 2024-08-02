@@ -10,10 +10,10 @@ public class DatabaseHandler : MonoBehaviour
 
     private string[] records;
     private string insertDataUrl = "https://beeeeeeenhihi.000webhostapp.com/insertData.php"; //api for inserting data
-    //private string getDataUrl = "https://beeeeeeenhihi.000webhostapp.com/ranking.php"    //api for getting data
+    //private string getDataUrl = "https://beeeeeeenhihi.000webhostapp.com/ranking.php";    //api for getting data
 
 
-    public Action<List<DataManager>> OnDataLoaded;
+    public Action<List<Snake2dPlayerRankingData>> OnDataLoaded;
 
 
     private void Awake()
@@ -61,14 +61,14 @@ public class DatabaseHandler : MonoBehaviour
             */
 
 
-            System.Collections.Generic.List<DataManager> rankingData
-                = new System.Collections.Generic.List<DataManager>();
+            System.Collections.Generic.List<Snake2dPlayerRankingData> rankingData
+                = new System.Collections.Generic.List<Snake2dPlayerRankingData>();
             foreach (string record in records)
             {
                 if (record == "")
                     break; //last splitted string
 
-                DataManager data = new DataManager(
+                Snake2dPlayerRankingData data = new Snake2dPlayerRankingData(
                     GetDataValue(record, "Name"),
                     int.Parse(GetDataValue(record, "Score")),
                     GetDataValue(record, "Time"),

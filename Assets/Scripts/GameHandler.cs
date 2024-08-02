@@ -42,7 +42,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private GameObject stonePrefab;
 
-    private CSVReader csvReader;
+    private TextDataLoader csvTextDataLoader;
     [SerializeField]
     private string[] moodIdx;//mood of current match
 
@@ -53,17 +53,17 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        csvReader = GetComponent<CSVReader>();
-        //csvReader.GetTextData();
+        csvTextDataLoader = GetComponent<TextDataLoader>();
 
         InitDBTListData();
 
-        Food.categoryList = csvReader.ReadCSV("categoryList");
+        Food.categoryList = csvTextDataLoader.LoadTextData("categoryList");
 
         for (int i = 0; i < Food.categoryList.Length; i++)//load category list
         {
             Food.categoryList[i] = Food.categoryList[i].Trim();
         }
+
 
 
         //choose scenario, random if not selected by player in main menu
@@ -129,7 +129,7 @@ public class GameHandler : MonoBehaviour
         }
 
 
-        string[] csvRecord = csvReader.ReadCSV("snake2dTextData");
+        string[] csvRecord = csvTextDataLoader.LoadTextData("snake2dTextData");
         //int numOfCol = 6;
 
         int languageIndex = PlayerPrefs.GetInt("Language");//0: TradChi, 1: SimpChi, 2: ENG
@@ -147,14 +147,14 @@ public class GameHandler : MonoBehaviour
 
             DBTData data = new DBTData();
 
-            data.text = columnData[0 + 3 * languageIndex].Trim();
-            //Debug.Log(columnData[0 + 3 * languageIndex].Trim());
-            data.category = columnData[1 + 3 * languageIndex].Trim();
+            data.text = columnData[1 + 3 * languageIndex].Trim();
             //Debug.Log(columnData[1 + 3 * languageIndex].Trim());
-
-
-            int listIndex = Array.IndexOf(moodIdx, columnData[2 + 3 * languageIndex].Trim());//find corresponding DBTSO List by mood
+            data.category = columnData[2 + 3 * languageIndex].Trim();
             //Debug.Log(columnData[2 + 3 * languageIndex].Trim());
+
+
+            int listIndex = Array.IndexOf(moodIdx, columnData[3 + 3 * languageIndex].Trim());//find corresponding DBTSO List by mood
+            //Debug.Log(columnData[3 + 3 * languageIndex].Trim());
             //Debug.Log(listIndex);
             scenarioList[listIndex].dbtList.Add(data);
         }

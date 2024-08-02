@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class GameSceneLanguageManager : MonoBehaviour //change UI language in game scene
 {
     [SerializeField]
-    private TextAsset gameSceneTextCsvFile; // Text in different language for game scene
-    [SerializeField]
     private Text[] uiTexts;
     [SerializeField]
     private string[] objLabel;
@@ -17,7 +15,7 @@ public class GameSceneLanguageManager : MonoBehaviour //change UI language in ga
 
     private void Awake()
     {
-        string[] temp = gameSceneTextCsvFile.text.Trim().Split('\n');
+        string[] temp = DataManager.instance.gameSceneUITextData.text.Trim().Split('\n');
         temp = temp.Skip(1).ToArray();//skip the row of column name
         objLabel = new string[temp.Length];
         for (int i = 0; i < objLabel.Length; i++)
@@ -31,7 +29,7 @@ public class GameSceneLanguageManager : MonoBehaviour //change UI language in ga
             string[] rowData = temp[i].Trim().Split(';').ToArray();
             for (int j = 0; j < gameSceneUITextData.GetLength(1); j++)
             {
-                gameSceneUITextData[i, j] = rowData[j + 1].Trim();//first column is label
+                gameSceneUITextData[i, j] = rowData[j + 1].Trim();//first column is Key
             }
         }
 
